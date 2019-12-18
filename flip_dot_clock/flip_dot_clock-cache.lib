@@ -172,11 +172,11 @@ X SW 9 400 300 100 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# mio_NCV7719
+# flip_dot_clock-rescue_NCV7719-mio
 #
-DEF mio_NCV7719 U 0 40 Y Y 1 F N
+DEF flip_dot_clock-rescue_NCV7719-mio U 0 40 Y Y 1 F N
 F0 "U" -300 700 50 H V C CNN
-F1 "mio_NCV7719" 150 700 50 H V C CNN
+F1 "flip_dot_clock-rescue_NCV7719-mio" 150 700 50 H V C CNN
 F2 "mio:SSOP-24_6.4x7.55mm_P0.65mm" -200 700 50 H I C CNN
 F3 "" -200 700 50 H I C CNN
 DRAW
@@ -208,11 +208,11 @@ X NC 9 -450 -250 100 R 50 50 1 1 N
 ENDDRAW
 ENDDEF
 #
-# mio_Small_7_Seg_FlipDot
+# flip_dot_clock-rescue_Small_7_Seg_FlipDot-mio
 #
-DEF mio_Small_7_Seg_FlipDot DS 0 40 Y Y 1 F N
+DEF flip_dot_clock-rescue_Small_7_Seg_FlipDot-mio DS 0 40 Y Y 1 F N
 F0 "DS" 500 -1700 50 H V C CNN
-F1 "mio_Small_7_Seg_FlipDot" 500 -1600 50 H V C CNN
+F1 "flip_dot_clock-rescue_Small_7_Seg_FlipDot-mio" 500 -1600 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -234,11 +234,11 @@ X G_RESET G2 250 -100 100 D 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# mio_UCD1V101MNL1GS
+# flip_dot_clock-rescue_UCD1V101MNL1GS-mio
 #
-DEF mio_UCD1V101MNL1GS C 0 65 N N 1 F N
+DEF flip_dot_clock-rescue_UCD1V101MNL1GS-mio C 0 65 N N 1 F N
 F0 "C" 150 150 60 H V C CNN
-F1 "mio_UCD1V101MNL1GS" 150 -300 60 H V C CNN
+F1 "flip_dot_clock-rescue_UCD1V101MNL1GS-mio" 150 -300 60 H V C CNN
 F2 "PCAP_8x10-ELECT" 150 -360 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST

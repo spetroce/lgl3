@@ -1,5 +1,5 @@
 EESchema Schematic File Version 4
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -33,7 +33,7 @@ F 3 "" H 6300 3400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L mio:NCV7719 U2
+L flip_dot_clock-rescue:NCV7719-mio U2
 U 1 1 5CEE231A
 P 5800 2750
 F 0 "U2" H 5800 3565 50  0000 C CNN
@@ -512,7 +512,7 @@ Wire Wire Line
 Wire Wire Line
 	5200 4750 5200 5050
 $Comp
-L mio:Small_7_Seg_FlipDot DS0
+L flip_dot_clock-rescue:Small_7_Seg_FlipDot-mio DS0
 U 1 1 5D1F5028
 P 5600 3950
 F 0 "DS0" H 5775 2211 50  0000 C CNN
@@ -546,7 +546,7 @@ Wire Wire Line
 Wire Wire Line
 	4850 3800 4850 2500
 $Comp
-L mio:UCD1V101MNL1GS C?
+L flip_dot_clock-rescue:UCD1V101MNL1GS-mio C?
 U 1 1 5D3C5739
 P 6350 1800
 F 0 "C?" V 6500 1905 60  0000 L CNN
