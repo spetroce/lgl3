@@ -1,42 +1,22 @@
 Configuration	lgl3
 STM32CubeMX 	5.5.0
-Date	02/15/2020
-MCU	STM32F070F6Px
+Date	02/23/2020
+MCU	STM32F051R8Tx
 
 
 
 PERIPHERALS	MODES	FUNCTIONS	PINS
-I2C1	I2C	I2C1_SCL	PF1-OSC_OUT
-I2C1	I2C	I2C1_SDA	PF0-OSC_IN
-SPI1	Full-Duplex Master	SPI1_MISO	PA6
-SPI1	Full-Duplex Master	SPI1_MOSI	PA7
-SPI1	Full-Duplex Master	SPI1_SCK	PA5
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
 
 
 
 Pin Nb	PINs	FUNCTIONs	LABELs
-2	PF0-OSC_IN	I2C1_SDA	
-3	PF1-OSC_OUT	I2C1_SCL	
-11	PA5	SPI1_SCK	
-12	PA6	SPI1_MISO	
-13	PA7	SPI1_MOSI	
 PERIPHERALS	MODES	FUNCTIONS	PINS
-I2C1	I2C	I2C1_SCL	PF1-OSC_OUT
-I2C1	I2C	I2C1_SDA	PF0-OSC_IN
-SPI1	Full-Duplex Master	SPI1_MISO	PA6
-SPI1	Full-Duplex Master	SPI1_MOSI	PA7
-SPI1	Full-Duplex Master	SPI1_SCK	PA5
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
 
 
 
 Pin Nb	PINs	FUNCTIONs	LABELs
-2	PF0-OSC_IN	I2C1_SDA	
-3	PF1-OSC_OUT	I2C1_SCL	
-11	PA5	SPI1_SCK	
-12	PA6	SPI1_MISO	
-13	PA7	SPI1_MOSI	
 
 
 
@@ -44,7 +24,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : lgl3
-Project Folder : /home/spetroce/code/src/lgl3/lgl3
+Project Folder : /home/spetroce/code/src/lgl3/firmware
 Toolchain / IDE : Makefile
 Firmware Package Name and Version : STM32Cube FW_F0 V1.11.0
 
@@ -54,7 +34,7 @@ STM32Cube MCU packages and embedded software packs : Copy only the necessary lib
 Generate peripheral initialization as a pair of '.c/.h' files per peripheral : Yes
 Backup previously generated files when re-generating : No
 Delete previously generated files when not re-generated : Yes
-Set all free pins as analog (to optimize the power consumption) : Yes
+Set all free pins as analog (to optimize the power consumption) : No
 
 
 Toolchains Settings : 
