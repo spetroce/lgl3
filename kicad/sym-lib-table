@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name flip_dot_clock)(type Legacy)(uri ${KIPRJMOD}/flip_dot_clock.lib)(options "")(descr ""))
+  (lib (name mio)(type Legacy)(uri ${KIPRJMOD}/parts/mio.lib)(options "")(descr ""))
 )
