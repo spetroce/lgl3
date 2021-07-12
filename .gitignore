@@ -1,2 +1,3 @@
-*.bak
-*.bck
+build/
+firmware/.mxproject
+test/

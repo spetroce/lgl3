@@ -20,13 +20,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdint.h>
-#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -214,16 +214,18 @@ void Ncv7719_SetDigit(const uint8_t prev_digit, const uint8_t next_digit) {
               bits_to_turn_off_en & reset_pin_bit_cfg_on & reset_pin_bit_en;
   }
   uint16_t * tx_data_word = (uint16_t*)(&tx_data);
-  uint16_t rx_data;
+  uint16_t rx_data = 0;
   uint16_t tx_rx_data_size = 1;  // spi configured with 16 bits frame data size
   uint32_t time_out_ms = 1000;
-  HAL_GPIO_WritePin(DRV_SPI1_NSS_GPIO_Port, DRV_SPI1_NSS_Pin, GPIO_PIN_RESET);
-  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(rx_data), tx_rx_data_size, time_out_ms);
-  HAL_GPIO_WritePin(DRV_SPI1_NSS_GPIO_Port, DRV_SPI1_NSS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_RESET);
+  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_SET);
   // Need minimum 5 microsecond wait here between CSB toggle
-  HAL_GPIO_WritePin(DRV_SPI1_NSS_GPIO_Port, DRV_SPI1_NSS_Pin, GPIO_PIN_RESET);
-  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(rx_data), tx_rx_data_size, time_out_ms);
-  HAL_GPIO_WritePin(DRV_SPI1_NSS_GPIO_Port, DRV_SPI1_NSS_Pin, GPIO_PIN_SET);
+  int i;
+  for (i = 0; i < 360; ++i) { }
+  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_RESET);
+  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_SET);
 }
 
 void Ncv7719_Init() {
@@ -261,6 +263,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */

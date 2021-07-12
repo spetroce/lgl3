@@ -32,7 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -62,12 +62,20 @@ void Error_Handler(void);
 #define MCO_GPIO_Port GPIOF
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
+#define SPI1_CS_0_Pin GPIO_PIN_0
+#define SPI1_CS_0_GPIO_Port GPIOB
+#define SPI1_CS_3_Pin GPIO_PIN_1
+#define SPI1_CS_3_GPIO_Port GPIOB
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
 #define VCP_RX_Pin GPIO_PIN_15
 #define VCP_RX_GPIO_Port GPIOA
+#define SPI1_CS_2_Pin GPIO_PIN_6
+#define SPI1_CS_2_GPIO_Port GPIOB
+#define SPI1_CS_1_Pin GPIO_PIN_7
+#define SPI1_CS_1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
