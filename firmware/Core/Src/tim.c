@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-volatile bool g_tim_half_bridge_en = true;
+volatile bool g_tim_call_set_digit = true;
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim6;
@@ -103,7 +103,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM6) {
-    g_tim_half_bridge_en = !g_tim_half_bridge_en;
+    g_tim_call_set_digit = true;
   }
 }
 

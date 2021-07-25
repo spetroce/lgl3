@@ -34,7 +34,10 @@ extern "C" {
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN Private defines */
-extern volatile bool g_tim_half_bridge_en;
+
+/// Times the Ncv7719_SetDigit() to be called every 500us
+extern volatile bool g_tim_call_set_digit;
+
 /* USER CODE END Private defines */
 
 void MX_TIM6_Init(void);

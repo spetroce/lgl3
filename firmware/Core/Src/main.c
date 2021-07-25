@@ -84,12 +84,27 @@
 #define NCV7719_HBCNF2 0x0004
 /// bit 1 - Configure Half−Bridge 1, 0 = LS On & HS Off, 1 = LS Off & HS On
 #define NCV7719_HBCNF1 0x0002
+
+#define NUM_DISPLAY 4
+#define NUM_PULSES 40
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-bool g_handle_on_bits = true;
+
+/*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
+
+/// Controls the state Ncv7719_SetDigit() is in for trying to set the reflectors
+/// which need to be ON or the ones that need to be off. The boot-up value is
+/// true, which means reflcetors that need to be turned on are always set first,
+/// then this is toggled to handle the reflectors that need to be turned off.
+bool g_handle_on_bits = true,
+     g_display_init = true;
+uint8_t g_set_digit_toggle_cnt = 0,
+        g_current_disp_idx = 0,
+        g_current_digit[NUM_DISPLAY] = {10, 10, 10, 10},
+        g_next_digit[NUM_DISPLAY] = {11, 11, 11, 11};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -176,11 +191,24 @@ Configure Half-Bridge dataset and bit shift them left by 6. This will give the
 correct bits needed to place in Hi-Z or not.
 */
 
-void Ncv7719_SetDigit(const uint8_t prev_digit, const uint8_t next_digit) {
-  if (prev_digit > 11 || next_digit > 11) {
+void Ncv7719_SetDigit() {
+  const uint8_t disp_idx = g_current_disp_idx;
+  if (disp_idx > NUM_DISPLAY) {
     return;
   }
-  const uint32_t digit_cfg[] =
+  const uint8_t curr_digit = g_current_digit[disp_idx],
+                next_digit = g_next_digit[disp_idx];
+  #define DIGIT_CFG_ARRAY_LEN 12
+  if (curr_digit > DIGIT_CFG_ARRAY_LEN ||
+      next_digit > DIGIT_CFG_ARRAY_LEN) {
+    return;
+  }
+  if (curr_digit == next_digit) {
+    if (++g_current_disp_idx >= NUM_DISPLAY) g_current_disp_idx = 0;
+    g_tim_call_set_digit = true;
+    return;
+  }
+  const uint32_t digit_cfg[DIGIT_CFG_ARRAY_LEN] =
     {0b00000000000000000000000001111110,  // 126
      0b00000000000000000000000000001100,  // 12
      0b00000000000000100000000000110110,  // 131126
@@ -195,41 +223,45 @@ void Ncv7719_SetDigit(const uint8_t prev_digit, const uint8_t next_digit) {
      0b00000000000000000000000000011110}; // 30
   const uint32_t reset_pin_bit_cfg_on = 0b00000000000001000000000000000000;  // 262144
   const uint32_t reset_pin_bit_en =  reset_pin_bit_cfg_on << 6;
-  // Also use digit_xor to specify which half-bridges need to be enbabled
-  const uint32_t digit_xor = digit_cfg[prev_digit] ^ digit_cfg[next_digit];
+  // Also use digit_xor to specify which half-bridges need to be enabled
+  const uint32_t digit_xor = curr_digit ^ digit_cfg[next_digit];
   const uint32_t bits_to_turn_on = digit_cfg[next_digit] & digit_xor,
-                 bits_to_turn_off = digit_cfg[prev_digit] & digit_cfg[digit_xor];
+                 bits_to_turn_off = curr_digit & digit_cfg[digit_xor];
   const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
                  bits_to_turn_off_en = bits_to_turn_off << 6;
-  uint32_t tx_data = 0;
-  /*
-    1 - Set g_handle_on_bits true (handle turning reflectors ON)
-    2 - Toggle g_tim_hb_en 40 times at 2kHz
-    3 - Set g_handle_on_bits false (handle turning reflectors OFF)
-    4 - Toggle g_tim_hb_en 40 times at 2kHz
-  */
-  if (g_tim_half_bridge_en) {
-    tx_data = g_handle_on_bits ?
-              bits_to_turn_on & bits_to_turn_on_en & reset_pin_bit_en:
-              bits_to_turn_off_en & reset_pin_bit_cfg_on & reset_pin_bit_en;
-  }
+  uint32_t tx_data;
+  tx_data = g_handle_on_bits ?
+            bits_to_turn_on & bits_to_turn_on_en & reset_pin_bit_en :
+            bits_to_turn_off_en & reset_pin_bit_cfg_on & reset_pin_bit_en;
   uint16_t * tx_data_word = (uint16_t*)(&tx_data);
   uint16_t rx_data = 0;
   uint16_t tx_rx_data_size = 1;  // spi configured with 16 bits frame data size
   uint32_t time_out_ms = 1000;
-  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_RESET);
+  GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
+  uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
   HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
-  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
   // Need minimum 5 microsecond wait here between CSB toggle
   int i;
   for (i = 0; i < 360; ++i) { }
-  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
   HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
-  HAL_GPIO_WritePin(SPI1_CS_0_GPIO_Port, SPI1_CS_0_Pin, GPIO_PIN_SET);
-}
-
-void Ncv7719_Init() {
-  Ncv7719_SetDigit(10, 11);
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  if (!g_handle_on_bits) {
+    ++g_set_digit_toggle_cnt;
+    if (g_set_digit_toggle_cnt == NUM_PULSES) {
+      // This will cause furher calls to 
+      g_current_digit[disp_idx] = next_digit;
+      if (next_digit == 10 && disp_idx == (NUM_DISPLAY - 1)) {
+        g_display_init = true;
+      }
+      g_set_digit_toggle_cnt = 0;
+      if (++g_current_disp_idx >= NUM_DISPLAY) g_current_disp_idx = 0;
+    }
+  }
+  // Always leave g_handle_on_bits true for the next time g_current_digit != next_digit
+  g_handle_on_bits = !g_handle_on_bits;
 }
 /* USER CODE END 0 */
 
@@ -265,15 +297,18 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    if (g_tim_call_set_digit) {
+      g_tim_call_set_digit = false;
+      Ncv7719_SetDigit();
+    }
     /* USER CODE END WHILE */
-
+    
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
