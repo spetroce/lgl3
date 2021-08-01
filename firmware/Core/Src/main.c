@@ -86,7 +86,7 @@
 #define NCV7719_HBCNF1 0x0002
 
 #define NUM_DISPLAY 4
-#define NUM_PULSES 5
+#define NUM_PULSES 40
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -230,23 +230,31 @@ void Ncv7719_SetDigit() {
   uint32_t tx_data = 0;
   if (!g_disable_all_output) {
     tx_data = g_handle_on_bits ?
-              bits_to_turn_on & bits_to_turn_on_en & reset_pin_bit_en :
-              bits_to_turn_off_en & reset_pin_bit_cfg_on & reset_pin_bit_en;
+              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en) :  // first
+              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en);  // second
   }
-  uint16_t * tx_data_word = (uint16_t*)(&tx_data);
+  uint16_t * tx_data_word = (uint16_t*)&tx_data;
   uint16_t rx_data = 0;
   uint16_t tx_rx_data_size = 1;  // spi configured with 16 bits frame data size
   uint32_t time_out_ms = 1000;
   GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
   uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  if (false) {
+    HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  } else {
+    HAL_SPI_Transmit(&hspi1, (uint8_t*)tx_data_word, tx_rx_data_size, time_out_ms);
+  }
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
   // Need minimum 5 microsecond wait here between CSB toggle
   int i;
-  for (i = 0; i < 360; ++i) { }
+  for (i = 0; i < 14; ++i) { }
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  if (false) {
+    HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
+  } else {
+    HAL_SPI_Transmit(&hspi1, (uint8_t*)(tx_data_word+1), tx_rx_data_size, time_out_ms);
+  }
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
   if (g_disable_all_output) {
     g_disable_all_output = false;
