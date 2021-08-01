@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-volatile bool g_tim_call_set_digit = true;
+volatile bool g_tim_call_set_digit = false;
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim6;
@@ -42,7 +42,7 @@ void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 1;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 18000-1;
+  htim6.Init.Period = 9000-1;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
