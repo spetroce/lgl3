@@ -321,6 +321,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
+  uint16_t beef_word = 0xBEEF;
+  HAL_SPI_Transmit(&hspi1, (uint8_t*)&beef_word, 1, 1000);
 
   // g_tim_call_set_digit frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
