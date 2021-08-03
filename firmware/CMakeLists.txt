@@ -60,6 +60,6 @@ add_custom_command(
   POST_BUILD
   COMMAND ${CMAKE_OBJCOPY} -Obinary "${BIN_DIR}/${ELF_TARGET_NAME}" "${BIN_DIR}/${BIN_FILE_NAME}"
   COMMAND ${CMAKE_OBJCOPY} -Oihex "${BIN_DIR}/${ELF_TARGET_NAME}" "${BIN_DIR}/${HEX_FILE_NAME}"
-  COMMENT "Generating binary file ${BIN_FILE_NAME} and hex file ${HEX_FILE_NAME} from ${ELF_FILE_NAME}")
+  COMMENT "Generating binary file ${BIN_FILE_NAME} and hex file ${HEX_FILE_NAME} from ${ELF_TARGET_NAME}")
 
 install(FILES "${BIN_DIR}/${HEX_FILE_NAME}" DESTINATION "/run/media/$ENV{USER}/NODE_F303K8")

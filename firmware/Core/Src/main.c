@@ -218,13 +218,14 @@ void Ncv7719_SetDigit() {
      0b00000000000000100000000001011110,  // 9
      0b00000000000000100000000001100000,  // init_prev
      0b00000000000000000000000000011110}; // init_next
+    //00000001000000000000010100010100 0x0514 <- wrong
                                         //       xg    XG    fedcbaFEDCBA
   const uint32_t reset_pin_bit_cfg_on = 0b00000000000001000000000000000000;  // X
   const uint32_t reset_pin_bit_en =  reset_pin_bit_cfg_on << 6;  // x
   // Also use digit_xor to specify which half-bridges need to be enabled
-  const uint32_t digit_xor = curr_digit ^ digit_cfg[next_digit];
+  const uint32_t digit_xor = digit_cfg[curr_digit] ^ digit_cfg[next_digit];
   const uint32_t bits_to_turn_on = digit_cfg[next_digit] & digit_xor,
-                 bits_to_turn_off = curr_digit & digit_cfg[digit_xor];
+                 bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
   const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
                  bits_to_turn_off_en = bits_to_turn_off << 6;
   uint32_t tx_data = 0;
