@@ -1,4 +1,5 @@
 build/
-test/
+test/*
+!test/test.cpp
 *.mxproject
 kicad/*/*.bck
