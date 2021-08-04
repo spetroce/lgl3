@@ -218,7 +218,6 @@ void Ncv7719_SetDigit() {
      0b00000000000000100000000001011110,  // 9
      0b00000000000000100000000001100000,  // init_prev
      0b00000000000000000000000000011110}; // init_next
-    //00000001000000000000010100010100 0x0514 <- wrong
                                         //       xg    XG    fedcbaFEDCBA
   const uint32_t reset_pin_bit_cfg_on = 0b00000000000001000000000000000000;  // X
   const uint32_t reset_pin_bit_en =  reset_pin_bit_cfg_on << 6;  // x
