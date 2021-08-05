@@ -45,7 +45,7 @@ set(BIN_FILE_NAME "${PROJECT_NAME_LOWER}.bin")
 set(HEX_FILE_NAME "${PROJECT_NAME_LOWER}.hex")
 
 add_executable("${ELF_TARGET_NAME}" ${SOURCES})
-target_compile_definitions("${ELF_TARGET_NAME}" PRIVATE -DUSE_HAL_DRIVER -DSTM32F303x8)
+target_compile_definitions("${ELF_TARGET_NAME}" PRIVATE -DUSE_HAL_DRIVER -DSTM32F303x8 -DUSE_FULL_LL_DRIVER)
 target_include_directories("${ELF_TARGET_NAME}"
     PRIVATE "${CMAKE_CURRENT_LIST_DIR}/Core/Inc"
             "${CMAKE_CURRENT_LIST_DIR}/Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include"

@@ -1,6 +1,6 @@
 Configuration	flip_dot_clock
 STM32CubeMX 	6.3.0
-Date	08/01/2021
+Date	08/04/2021
 MCU	STM32F303K8Tx
 
 

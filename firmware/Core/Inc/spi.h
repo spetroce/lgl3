@@ -31,9 +31,12 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern SPI_HandleTypeDef hspi1;
-
 /* USER CODE BEGIN Private defines */
+
+#define SPI_BLOCKING_TRANSMIT_16(data_word) \
+  while (!(SPI1->SR & SPI_SR_TXE)); \
+  LL_SPI_TransmitData16(SPI1, data_word); \
+  while (SPI1->SR & SPI_SR_BSY);
 
 /* USER CODE END Private defines */
 

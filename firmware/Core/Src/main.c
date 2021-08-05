@@ -234,28 +234,24 @@ void Ncv7719_SetDigit() {
               (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en);  // second
   }
   uint16_t * tx_data_word = (uint16_t*)&tx_data;
-  uint16_t rx_data = 0;
-  uint16_t tx_rx_data_size = 1;  // spi configured with 16 bits frame data size
-  uint32_t time_out_ms = 1000;
   GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
   uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
+  // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  if (false) {
-    HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)tx_data_word, (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
-  } else {
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)tx_data_word, tx_rx_data_size, time_out_ms);
-  }
+  LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
+  // Wait for transmit to complete
+  while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
   // Need minimum 5 microsecond wait here between CSB toggle
   int i;
   for (i = 0; i < 25; ++i) { }
+  // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  if (false) {
-    HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)(tx_data_word+1), (uint8_t*)(&rx_data), tx_rx_data_size, time_out_ms);
-  } else {
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)(tx_data_word+1), tx_rx_data_size, time_out_ms);
-  }
+  LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
+  // Wait for SPI transmit to complete
+  while (SPI1->SR & SPI_SR_BSY);
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  // g_disable_all_output is true, we are finished setting the digit
   if (g_disable_all_output) {
     g_disable_all_output = false;
     // This update to g_current_digit will cause the next call to
@@ -321,9 +317,12 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
-  uint16_t beef_word = 0xBEEF;
-  HAL_SPI_Transmit(&hspi1, (uint8_t*)&beef_word, 1, 1000);
-
+  if (!LL_SPI_IsEnabled(SPI1)) {
+    LL_SPI_Enable(SPI1);
+  }
+  // Send test SPI message (this also makes the clock default state low, which
+  // is good for the doing logic analyzer work).
+  LL_SPI_TransmitData16(SPI1, 0xBEEF);
   // g_tim_call_set_digit frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
                  LED_BLINK_PERIOD = 2000;  // 1 sec
