@@ -104,6 +104,7 @@ bool g_handle_on_bits = true,
      g_disable_all_output = false;
 uint8_t g_set_digit_toggle_cnt = 0,
         g_current_disp_idx = 0,
+        g_enable_cnt = 0,
         g_current_digit[NUM_DISPLAY] = {10, 10, 10, 10},
         g_next_digit[NUM_DISPLAY] = {11, 11, 11, 11};
 
@@ -186,6 +187,10 @@ n = 0b0000000000000000 0000000000011110 (init_next)
 To get the Enable half shift bits, take the bits requiring no change from the
 Configure Half-Bridge dataset and bit shift them left by 6. This will give the
 correct bits needed to place in Hi-Z or not.
+
+Channel 8 is a common tied to all the RESET pins of the 7-segment display.
++SET and -RESET will cause a segment to show.
+-SET and +RESET will cause a segment to be hidden.
 */
 
 void Ncv7719_SetDigit() {
@@ -202,6 +207,15 @@ void Ncv7719_SetDigit() {
   }
   if (curr_digit == next_digit) {
     if (++g_current_disp_idx >= NUM_DISPLAY) g_current_disp_idx = 0;
+    return;
+  }
+  if (HAL_GPIO_ReadPin(NCV_EN_GPIO_Port, NCV_EN_Pin) == GPIO_PIN_RESET) {
+    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_SET);
+  }
+  // This will allow 500us (htim6 elapsing 1 period) between NCV_EN going high
+  // and sending SPI data.
+  if (g_enable_cnt < 1) {
+    ++g_enable_cnt;
     return;
   }
   const uint32_t digit_cfg[DIGIT_CFG_ARRAY_LEN] =
@@ -227,11 +241,12 @@ void Ncv7719_SetDigit() {
                  bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
   const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
                  bits_to_turn_off_en = bits_to_turn_off << 6;
+  const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
   uint32_t tx_data = 0;
   if (!g_disable_all_output) {
     tx_data = g_handle_on_bits ?
-              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en) :  // first
-              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en);  // second
+              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en | ncv7719_hbsel) :  // first
+              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en | ncv7719_hbsel);  // second
   }
   uint16_t * tx_data_word = (uint16_t*)&tx_data;
   GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
@@ -239,6 +254,7 @@ void Ncv7719_SetDigit() {
   // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
   LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
+  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
   // Wait for transmit to complete
   while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
@@ -248,6 +264,7 @@ void Ncv7719_SetDigit() {
   // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
   LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
+  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
   // Wait for SPI transmit to complete
   while (SPI1->SR & SPI_SR_BSY);
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
@@ -264,6 +281,8 @@ void Ncv7719_SetDigit() {
         next_digit == 11 && disp_idx == (NUM_DISPLAY - 1)) {
       g_clock_is_init = true;
     }
+    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_RESET);
+    g_enable_cnt = 0;
     return;
   }
   // When g_handle_on_bits is false, we are on an EVEN iteration of
@@ -316,6 +335,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_RESET);
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
   if (!LL_SPI_IsEnabled(SPI1)) {
     LL_SPI_Enable(SPI1);
@@ -323,15 +343,18 @@ int main(void)
   // Send test SPI message (this also makes the clock default state low, which
   // is good for the doing logic analyzer work).
   LL_SPI_TransmitData16(SPI1, 0xBEEF);
+  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
   // g_tim_call_set_digit frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
                  LED_BLINK_PERIOD = 2000;  // 1 sec
   const uint32_t LED_ON_START_COUNT = LED_BLINK_PERIOD - LED_ON_DURATION;
   uint32_t led_blink_count = 0;
+  bool first_tim_call_set_digit = true;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_Delay(10);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -341,7 +364,11 @@ int main(void)
     if (g_tim_call_set_digit) {
       g_tim_call_set_digit = false;
       ++led_blink_count;
-      Ncv7719_SetDigit();
+      if (first_tim_call_set_digit) {
+        first_tim_call_set_digit = false;
+      } else {
+        Ncv7719_SetDigit();
+      }
     }
     // Blink Status LED
     if (led_blink_count == LED_ON_START_COUNT) {
@@ -349,6 +376,12 @@ int main(void)
     } else if (led_blink_count == LED_BLINK_PERIOD) {
       HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
       led_blink_count = 0;
+      if (g_clock_is_init) {
+        g_next_digit[0] += 1;
+        if (g_next_digit[0] > 9) {
+          g_next_digit[0] = 0;
+        }
+      }
     }
   }
   /* USER CODE END 3 */

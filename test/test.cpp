@@ -1,6 +1,9 @@
 #include <iostream>
 #include <bitset>
 
+/// bit 14 - Channel Group Select, 1 = HB [8:7] | 0 = HB [6:1]
+#define NCV7719_HBSEL 0x4000
+
 uint8_t g_set_digit_toggle_cnt = 0;
 
 int main(int argc, char *argv[]) {
@@ -38,8 +41,8 @@ int main(int argc, char *argv[]) {
                  bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
   const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
                  bits_to_turn_off_en = bits_to_turn_off << 6;
-  uint32_t tx_data_handle_on_bits = bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en;
-  uint32_t tx_data_handle_off_bits = bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en;
+  uint32_t tx_data_handle_on_bits = bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en | NCV7719_HBSEL;
+  uint32_t tx_data_handle_off_bits = bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en | NCV7719_HBSEL;
   std::cout << "                         xg    XG    fedcbaFEDCBA" << std::endl;
   std::cout << "      curr_digit: " << std::bitset<32>(digit_cfg[curr_digit]) << std::endl;
   std::cout << "      next_digit: " << std::bitset<32>(digit_cfg[next_digit]) << std::endl;
