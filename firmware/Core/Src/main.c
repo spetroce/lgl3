@@ -103,6 +103,8 @@ bool g_ncv_handle_on_bits = true,
      g_ncv_clock_is_init = false;
 uint8_t g_ncv_current_digit[NUM_DISPLAY] = {10, 10, 10, 10},
         g_ncv_next_digit[NUM_DISPLAY] = {11, 11, 11, 11};
+uint8_t g_ncv_hide_all_step = UINT8_MAX,
+        g_ncv_show_all_step = UINT8_MAX;
 
 /* USER CODE END PV */
 
@@ -189,6 +191,93 @@ Channel 8 is a common tied to all the RESET pins of the 7-segment display.
 -SET and +RESET will cause a segment to be hidden.
 */
 
+// GPIO_PIN_SET = enable
+// GPIO_PIN_RESET = disable
+// returns true if pin_state was already the current setting
+bool Ncv7719_Enable(const GPIO_PinState pin_state) {
+  if (HAL_GPIO_ReadPin(NCV_EN_GPIO_Port, NCV_EN_Pin) == pin_state) {
+    return true;
+  } else {
+    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, pin_state);
+  }
+  return false;
+}
+
+bool Ncv7719_SpiTransmit32(const uint8_t disp_idx, uint32_t tx_data) {
+  if (disp_idx >= NUM_DISPLAY) {
+    return false;
+  }
+  const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
+  tx_data |= ncv7719_hbsel;
+  uint16_t * tx_data_word = (uint16_t*)&tx_data;
+  GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
+  uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
+  // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
+  LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
+  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
+  // Wait for transmit to complete
+  while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  // Need minimum 5 microsecond wait here between CSB toggle
+  int i;
+  for (i = 0; i < 25; ++i) { }
+  // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
+  LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
+  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
+  // Wait for SPI transmit to complete
+  while (SPI1->SR & SPI_SR_BSY);
+  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  return true;
+}
+
+bool Ncv7719_HideAllSegment(const uint8_t disp_idx) {
+#define NCV_HIDE_ALL_NUM_STEP 6
+  uint32_t tx_data[4] =
+  //          xg    XG0   fedcbaFEDCBA0
+    {0b00000001000001000000000110000000,
+     0b00000001000001000000011000000000,
+     0b00000001000001000001100000000000,
+     0b00000001100001000000000000000000};
+  if (g_ncv_hide_all_step >= NCV_HIDE_ALL_NUM_STEP) {
+    g_ncv_hide_all_step = 0;
+  }
+  if (g_ncv_hide_all_step == 0) {
+    Ncv7719_Enable(GPIO_PIN_SET);
+  } else if (g_ncv_hide_all_step > 0 && g_ncv_hide_all_step < NCV_HIDE_ALL_NUM_STEP-1) {
+    uint8_t i = g_ncv_hide_all_step - 1;
+    Ncv7719_SpiTransmit32(disp_idx, tx_data[i]);
+  } else {
+    Ncv7719_Enable(GPIO_PIN_RESET);
+  }
+  ++g_ncv_hide_all_step;
+  return g_ncv_hide_all_step >= NCV_HIDE_ALL_NUM_STEP;
+}
+
+bool Ncv7719_ShowAllSegment(const uint8_t disp_idx) {
+  #define NCV_SHOW_ALL_NUM_STEP 6
+  uint32_t tx_data[4] =
+  //          xg    XG0   fedcbaFEDCBA0
+    {0b00000001000000000000000110000110,
+     0b00000001000000000000011000011000,
+     0b00000001000000000001100001100000,
+     0b00000001100000100000000000000000};
+  if (g_ncv_show_all_step >= NCV_SHOW_ALL_NUM_STEP) {
+    g_ncv_show_all_step = 0;
+  }
+  if (g_ncv_show_all_step == 0) {
+    Ncv7719_Enable(GPIO_PIN_SET);
+  } else if (g_ncv_show_all_step > 0 && g_ncv_show_all_step < NCV_SHOW_ALL_NUM_STEP-1) {
+    uint8_t i = g_ncv_show_all_step - 1;
+    Ncv7719_SpiTransmit32(disp_idx, tx_data[i]);
+  } else {
+    Ncv7719_Enable(GPIO_PIN_RESET);
+  }
+  ++g_ncv_show_all_step;
+  return g_ncv_show_all_step >= NCV_SHOW_ALL_NUM_STEP;
+}
+
 bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   if (disp_idx >= NUM_DISPLAY) {
     return false;
@@ -213,12 +302,11 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   }
   // This will allow 500us (htim6 elapsing 1 period) between NCV_EN going high
   // and sending SPI data.
-  if (HAL_GPIO_ReadPin(NCV_EN_GPIO_Port, NCV_EN_Pin) == GPIO_PIN_RESET) {
-    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_SET);
+  if (!Ncv7719_Enable(GPIO_PIN_SET)) {
     return false;
   }
   const uint32_t digit_cfg[DIGIT_CFG_ARRAY_LEN] =
-  //          xg    XG    fedcbaFEDCBA
+  //          xg    XG0   fedcbaFEDCBA0
     {0b00000000000000000000000001111110,  // 0
      0b00000000000000000000000000001100,  // 1
      0b00000000000000100000000000110110,  // 2
@@ -231,7 +319,7 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
      0b00000000000000100000000001011110,  // 9
      0b00000000000000100000000001100000,  // init_prev
      0b00000000000000000000000000011110}; // init_next
-                                        //       xg    XG    fedcbaFEDCBA
+                                        //       xg    XG0   fedcbaFEDCBA0
   const uint32_t reset_pin_bit_cfg_on = 0b00000000000001000000000000000000;  // X
   const uint32_t reset_pin_bit_en =  reset_pin_bit_cfg_on << 6;  // x
   // Also use digit_xor to specify which half-bridges need to be enabled
@@ -240,33 +328,13 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
                  bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
   const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
                  bits_to_turn_off_en = bits_to_turn_off << 6;
-  const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
   uint32_t tx_data = 0;
   if (!g_ncv_disable_all_output) {
     tx_data = g_ncv_handle_on_bits ?
-              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en | ncv7719_hbsel) :
-              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en | ncv7719_hbsel);
+              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en) :
+              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en);
   }
-  uint16_t * tx_data_word = (uint16_t*)&tx_data;
-  GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
-  uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
-  // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
-  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
-  // Wait for transmit to complete
-  while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
-  // Need minimum 5 microsecond wait here between CSB toggle
-  int i;
-  for (i = 0; i < 25; ++i) { }
-  // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
-  LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
-  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
-  // Wait for SPI transmit to complete
-  while (SPI1->SR & SPI_SR_BSY);
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  Ncv7719_SpiTransmit32(disp_idx, tx_data);
   // g_ncv_disable_all_output is true, we are finished setting the digit
   if (g_ncv_disable_all_output) {
     g_ncv_disable_all_output = false;
@@ -281,7 +349,7 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
         next_digit == 11 && disp_idx == (NUM_DISPLAY - 1)) {
       g_ncv_clock_is_init = true;
     }
-    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_RESET);
+    Ncv7719_Enable(GPIO_PIN_RESET);
     return true;
   }
   // After we handle the off bits (ie. g_ncv_handle_on_bits = false) we have to set
@@ -345,6 +413,7 @@ int main(void)
   bool first_tim_call_set_digit = true;
   uint8_t disp_idx = 0,
           next_digit[NUM_DISPLAY] = {0, 0, 0, 0};
+  int8_t curr_func = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -355,19 +424,28 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
     if (g_tim_call_set_digit) {
       g_tim_call_set_digit = false;
-      ++led_blink_count;
       if (first_tim_call_set_digit) {
         first_tim_call_set_digit = false;
       } else {
-        if (Ncv7719_SetDigit(disp_idx, next_digit[disp_idx])) {
-          if (++disp_idx >= NUM_DISPLAY) {
-            disp_idx = 0;
+        if (curr_func == 1) {
+          if (Ncv7719_HideAllSegment(disp_idx)) {
+            if (++disp_idx >= NUM_DISPLAY) {
+              disp_idx = 0;
+              curr_func *= -1;
+            }
+          }
+        } else if (curr_func == 2) {
+          if (Ncv7719_ShowAllSegment(disp_idx)) {
+            if (++disp_idx >= NUM_DISPLAY) {
+              disp_idx = 0;
+              curr_func *= -1;
+            }
           }
         }
       }
+      ++led_blink_count;
     }
     // Blink Status LED
     if (led_blink_count == LED_ON_START_COUNT) {
@@ -375,9 +453,16 @@ int main(void)
     } else if (led_blink_count == LED_BLINK_PERIOD) {
       HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
       led_blink_count = 0;
-      next_digit[0] += 1;
-      if (next_digit[0] > 9) {
-        next_digit[0] = 0;
+      // next_digit[0] += 1;
+      // if (next_digit[0] > 9) {
+      //   next_digit[0] = 0;
+      // }
+      if (curr_func < 0) {
+        curr_func *= -1;
+        ++curr_func;
+        if (curr_func > 2) {
+          curr_func = 1;
+        }
       }
     }
   }
