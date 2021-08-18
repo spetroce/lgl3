@@ -91,21 +91,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+#define TX_DATA_MAX_LEN 64
+uint32_t g_tx_data[TX_DATA_MAX_LEN];
+uint8_t g_disp_idx[TX_DATA_MAX_LEN];
+uint32_t g_tx_data_write_idx = 0,
+         g_tx_data_read_idx = 0,
+         g_tx_data_len = 0;
 /*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
-
-/// Controls the state Ncv7719_SetDigit() is in for trying to set the reflectors
-/// which need to be ON or the ones that need to be off. The boot-up value is
-/// true, which means reflcetors that need to be turned on are always set first,
-/// then this is toggled to handle the reflectors that need to be turned off.
-bool g_ncv_handle_on_bits = true,
-     g_ncv_disable_all_output = false,
-     g_ncv_clock_is_init = false;
-uint8_t g_ncv_current_digit[NUM_DISPLAY] = {10, 10, 10, 10},
-        g_ncv_next_digit[NUM_DISPLAY] = {11, 11, 11, 11};
-uint8_t g_ncv_hide_all_step = UINT8_MAX,
-        g_ncv_show_all_step = UINT8_MAX;
-
+uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
+        g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -122,45 +116,6 @@ F     B
    G
 E     C
    D
-
-Some notes looking at the number of bits that have to be turned on and off to go
-from the previous digit to the next. Don't want to exceed 4 ON or 4 OFF. 
-
-       GFEDCBA
-0 - 0b00111111
-1 - 0b00000110  4 ON, 0 OFF
-2 - 0b01011011  4 ON, 1 OFF
-0 - 0b00111111  2 ON, 1 OFF
-
-       GFEDCBA
-0 - 0b00111111
-1 - 0b00000110  4 ON, 0 OFF
-2 - 0b01011011  4 ON, 1 OFF
-3 - 0b01001111  1 ON, 1 OFF
-4 - 0b01100110  1 ON, 2 OFF
-5 - 0b01101101  2 ON, 1 OFF
-6 - 0b01111101  1 ON, 0 OFF
-0 - 0b00111111  1 ON, 1 OFF
-
-       GFEDCBA
-0 - 0b00111111
-1 - 0b00000110  0 ON, 4 OFF
-2 - 0b01011011  4 ON, 1 OFF
-3 - 0b01001111  1 ON, 1 OFF
-4 - 0b01100110  1 ON, 2 OFF
-5 - 0b01101101  2 ON, 1 OFF
-6 - 0b01111101  1 ON, 0 OFF
-7 - 0b00000111  1 ON, 4 OFF
-8 - 0b01111111  4 ON, 0 OFF
-9 - 0b01101111  0 ON, 1 OFF
-0 - 0b00111111  1 ON, 1 OFF
-
-Use these on startup. Assuming init_prev on power up and going to init_next will
-ensure we don't flip more than 4 reflectors at once. The init_next pattern also
-ensures that the first digit we go to does not flip more than 4 reflectors and
-also statistically the fewest number of reflectors needed to be flipped.
-init_prev: 0b01110000
-init_next: 0b00001111
 
 NCV7719 SPI Commands
 UPPERCASE letter bits are to configure output as high or low
@@ -179,8 +134,6 @@ X and x are for the common H-Bridge
 7 - 0b0000000000000000 0000000000001110
 8 - 0b0000000000000010 0000000001111110
 9 - 0b0000000000000010 0000000001011110
-p - 0b0000000000000010 0000000001100000 (init_prev)
-n = 0b0000000000000000 0000000000011110 (init_next)
 
 To get the Enable half shift bits, take the bits requiring no change from the
 Configure Half-Bridge dataset and bit shift them left by 6. This will give the
@@ -191,10 +144,36 @@ Channel 8 is a common tied to all the RESET pins of the 7-segment display.
 -SET and +RESET will cause a segment to be hidden.
 */
 
+uint32_t TxDataLen() {
+  return g_tx_data_len;
+}
+
+void TxDataPush(const uint32_t data, const uint8_t disp_idx) {
+  g_tx_data[g_tx_data_write_idx] = data;
+  g_disp_idx[g_tx_data_write_idx] = disp_idx;
+  if (++g_tx_data_write_idx >= TX_DATA_MAX_LEN) {
+    g_tx_data_write_idx = 0;
+  }
+  ++g_tx_data_len;  // TODO: can overflow
+}
+
+bool TxDataPop(uint32_t * tx_data, uint8_t * disp_idx) {
+  if (g_tx_data_len > 0) {
+    *tx_data = g_tx_data[g_tx_data_read_idx];
+    *disp_idx = g_disp_idx[g_tx_data_read_idx];
+    if (++g_tx_data_read_idx >= TX_DATA_MAX_LEN) {
+      g_tx_data_read_idx = 0;
+    }
+    --g_tx_data_len;
+    return true;
+  }
+  return false;
+}
+
 // GPIO_PIN_SET = enable
 // GPIO_PIN_RESET = disable
 // returns true if pin_state was already the current setting
-bool Ncv7719_Enable(const GPIO_PinState pin_state) {
+bool EnableDispDriver(const GPIO_PinState pin_state) {
   if (HAL_GPIO_ReadPin(NCV_EN_GPIO_Port, NCV_EN_Pin) == pin_state) {
     return true;
   } else {
@@ -203,10 +182,17 @@ bool Ncv7719_Enable(const GPIO_PinState pin_state) {
   return false;
 }
 
-bool Ncv7719_SpiTransmit32(const uint8_t disp_idx, uint32_t tx_data) {
-  if (disp_idx >= NUM_DISPLAY) {
-    return false;
+void SpiTransmit32() {
+  if (TxDataLen() == 0) {
+    EnableDispDriver(GPIO_PIN_RESET);
+    return;
   }
+  if (!EnableDispDriver(GPIO_PIN_SET)) {
+    return;
+  }
+  uint32_t tx_data;
+  uint8_t disp_idx;
+  TxDataPop(&tx_data, &disp_idx);
   const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
   tx_data |= ncv7719_hbsel;
   uint16_t * tx_data_word = (uint16_t*)&tx_data;
@@ -229,58 +215,33 @@ bool Ncv7719_SpiTransmit32(const uint8_t disp_idx, uint32_t tx_data) {
   // Wait for SPI transmit to complete
   while (SPI1->SR & SPI_SR_BSY);
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
-  return true;
 }
 
-bool Ncv7719_HideAllSegment(const uint8_t disp_idx) {
-#define NCV_HIDE_ALL_NUM_STEP 6
-  uint32_t tx_data[4] =
-  //          xg    XG0   fedcbaFEDCBA0
-    {0b00000001000001000000000110000000,
-     0b00000001000001000000011000000000,
-     0b00000001000001000001100000000000,
-     0b00000001100001000000000000000000};
-  if (g_ncv_hide_all_step >= NCV_HIDE_ALL_NUM_STEP) {
-    g_ncv_hide_all_step = 0;
-  }
-  if (g_ncv_hide_all_step == 0) {
-    Ncv7719_Enable(GPIO_PIN_SET);
-  } else if (g_ncv_hide_all_step > 0 && g_ncv_hide_all_step < NCV_HIDE_ALL_NUM_STEP-1) {
-    uint8_t i = g_ncv_hide_all_step - 1;
-    Ncv7719_SpiTransmit32(disp_idx, tx_data[i]);
-  } else {
-    Ncv7719_Enable(GPIO_PIN_RESET);
-  }
-  ++g_ncv_hide_all_step;
-  return g_ncv_hide_all_step >= NCV_HIDE_ALL_NUM_STEP;
-}
-
-bool Ncv7719_ShowAllSegment(const uint8_t disp_idx) {
-  #define NCV_SHOW_ALL_NUM_STEP 6
-  uint32_t tx_data[4] =
-  //          xg    XG0   fedcbaFEDCBA0
-    {0b00000001000000000000000110000110,
-     0b00000001000000000000011000011000,
-     0b00000001000000000001100001100000,
-     0b00000001100000100000000000000000};
-  if (g_ncv_show_all_step >= NCV_SHOW_ALL_NUM_STEP) {
-    g_ncv_show_all_step = 0;
-  }
-  if (g_ncv_show_all_step == 0) {
-    Ncv7719_Enable(GPIO_PIN_SET);
-  } else if (g_ncv_show_all_step > 0 && g_ncv_show_all_step < NCV_SHOW_ALL_NUM_STEP-1) {
-    uint8_t i = g_ncv_show_all_step - 1;
-    Ncv7719_SpiTransmit32(disp_idx, tx_data[i]);
-  } else {
-    Ncv7719_Enable(GPIO_PIN_RESET);
-  }
-  ++g_ncv_show_all_step;
-  return g_ncv_show_all_step >= NCV_SHOW_ALL_NUM_STEP;
-}
-
-bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
+void HideAllSegment(const uint8_t disp_idx) {
   if (disp_idx >= NUM_DISPLAY) {
-    return false;
+    return;
+  }
+  //                  xg    XG0   fedcbaFEDCBA0
+  TxDataPush(0b00000001000001000000000110000000, disp_idx);
+  TxDataPush(0b00000001000001000000011000000000, disp_idx);
+  TxDataPush(0b00000001000001000001100000000000, disp_idx);
+  TxDataPush(0b00000001100001000000000000000000, disp_idx);
+}
+
+void ShowAllSegment(const uint8_t disp_idx) {
+  if (disp_idx >= NUM_DISPLAY) {
+    return;
+  }
+  //                  xg    XG0   fedcbaFEDCBA0
+  TxDataPush(0b00000001000000000000000110000110, disp_idx);
+  TxDataPush(0b00000001000000000000011000011000, disp_idx);
+  TxDataPush(0b00000001000000000001100001100000, disp_idx);
+  TxDataPush(0b00000001100000100000000000000000, disp_idx);
+}
+
+void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
+  if (disp_idx >= NUM_DISPLAY) {
+    return;
   }
   const uint8_t curr_digit = g_ncv_current_digit[disp_idx];
   #define DIGIT_CFG_ARRAY_LEN 12
@@ -294,17 +255,22 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
     if (next_digit < DIGIT_CFG_ARRAY_LEN) {
       g_ncv_next_digit[disp_idx] = next_digit;
     } else {
-      return false;
+      return;
     }
   }
   if (curr_digit == next_digit) {
-    return true;
+    return;
   }
-  // This will allow 500us (htim6 elapsing 1 period) between NCV_EN going high
-  // and sending SPI data.
-  if (!Ncv7719_Enable(GPIO_PIN_SET)) {
-    return false;
-  }
+  #define NUM_SEGMENT 7
+  const uint32_t seg_mask[NUM_SEGMENT] =
+  //          xg    XG0   fedcbaFEDCBA0
+    {0b00000000000000000000000000000010,  // A
+     0b00000000000000000000000000000100,  // B
+     0b00000000000000000000000000001000,  // C
+     0b00000000000000000000000000010000,  // D
+     0b00000000000000000000000000100000,  // E
+     0b00000000000000000000000001000000,  // F
+     0b00000000000000100000000000000000}; // G
   const uint32_t digit_cfg[DIGIT_CFG_ARRAY_LEN] =
   //          xg    XG0   fedcbaFEDCBA0
     {0b00000000000000000000000001111110,  // 0
@@ -317,50 +283,55 @@ bool Ncv7719_SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
      0b00000000000000000000000000001110,  // 7
      0b00000000000000100000000001111110,  // 8
      0b00000000000000100000000001011110,  // 9
-     0b00000000000000100000000001100000,  // init_prev
-     0b00000000000000000000000000011110}; // init_next
+     0b00000000000000100000000001111110,  // all
+     0b00000000000000000000000000000000}; // none
                                         //       xg    XG0   fedcbaFEDCBA0
   const uint32_t reset_pin_bit_cfg_on = 0b00000000000001000000000000000000;  // X
   const uint32_t reset_pin_bit_en =  reset_pin_bit_cfg_on << 6;  // x
   // Also use digit_xor to specify which half-bridges need to be enabled
   const uint32_t digit_xor = digit_cfg[curr_digit] ^ digit_cfg[next_digit];
-  const uint32_t bits_to_turn_on = digit_cfg[next_digit] & digit_xor,
-                 bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
-  const uint32_t bits_to_turn_on_en = bits_to_turn_on << 6,
-                 bits_to_turn_off_en = bits_to_turn_off << 6;
-  uint32_t tx_data = 0;
-  if (!g_ncv_disable_all_output) {
-    tx_data = g_ncv_handle_on_bits ?
-              (bits_to_turn_on | bits_to_turn_on_en | reset_pin_bit_en) :
-              (bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en);
-  }
-  Ncv7719_SpiTransmit32(disp_idx, tx_data);
-  // g_ncv_disable_all_output is true, we are finished setting the digit
-  if (g_ncv_disable_all_output) {
-    g_ncv_disable_all_output = false;
-    // This update to g_ncv_current_digit will cause the next call to
-    // Ncv7719_SetDigit() to skip to the next disp_idx
-    g_ncv_current_digit[disp_idx] = next_digit;
-    g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
-    // On boot up, we set the clock to the pattern specified by a digit 11. Once
-    // the last digit (NUM_DISPLAY - 1) is set, the clock is initialized and we
-    // can start displaying numbers.
-    if (!g_ncv_clock_is_init &&
-        next_digit == 11 && disp_idx == (NUM_DISPLAY - 1)) {
-      g_ncv_clock_is_init = true;
+  const uint32_t all_bits_to_turn_on = digit_cfg[next_digit] & digit_xor,
+                 all_bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
+  // We can only turn on or off up to two segments at a time so create
+  // incremental masks to go from the previous digit to the next one.
+  uint32_t bits_to_turn_on[8] = {0},
+           bits_to_turn_off[8] = {0};
+  uint8_t bits_to_turn_on_len = 0,
+          bits_to_turn_off_len = 0;
+  uint8_t i, j, k;
+  for (i = 0, j = 0, k = 0; i < NUM_SEGMENT; ++i) {
+    if (all_bits_to_turn_on & seg_mask[i]) {
+      bits_to_turn_on[bits_to_turn_on_len] |= seg_mask[i];
+      ++j;
+      if (j == 2) {
+        j = 0;
+        ++bits_to_turn_on_len;
+      }
+    } else if (all_bits_to_turn_off & seg_mask[i]) {
+      bits_to_turn_off[bits_to_turn_off_len] |= seg_mask[i];
+      ++k;
+      if (k == 2) {
+        ++bits_to_turn_off_len;
+        k = 0;
+      }
     }
-    Ncv7719_Enable(GPIO_PIN_RESET);
-    return true;
   }
-  // After we handle the off bits (ie. g_ncv_handle_on_bits = false) we have to set
-  // g_ncv_disable_all_output and call Ncv7719_SetDigit() once more to turn off all
-  // the outputs.
-  if (!g_ncv_handle_on_bits) {
-    g_ncv_disable_all_output = true;
+  if (j % 2 != 0) {
+    ++bits_to_turn_on_len;
   }
-  // Always leave g_ncv_handle_on_bits true for the next time g_ncv_current_digit != next_digit
-  g_ncv_handle_on_bits = !g_ncv_handle_on_bits;
-  return false;
+  if (k % 2 != 0) {
+    ++bits_to_turn_off_len;
+  }
+  for (i = 0; i < bits_to_turn_on_len; ++i) {
+    const uint32_t bits_to_turn_on_en = bits_to_turn_on[i] << 6;
+    TxDataPush(bits_to_turn_on[i] | bits_to_turn_on_en | reset_pin_bit_en, disp_idx);
+  }
+  for (i = 0; i < bits_to_turn_off_len; ++i) {
+    const uint32_t bits_to_turn_off_en = bits_to_turn_off[i] << 6;
+    TxDataPush(bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en, disp_idx);
+  }
+  g_ncv_current_digit[disp_idx] = next_digit;
+  g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
 }
 /* USER CODE END 0 */
 
@@ -412,13 +383,15 @@ int main(void)
   uint32_t led_blink_count = 0;
   bool first_tim_call_set_digit = true;
   uint8_t disp_idx = 0,
-          next_digit[NUM_DISPLAY] = {0, 0, 0, 0};
-  int8_t curr_func = 1;
+          next_digit[NUM_DISPLAY] = {9, 9, 9, 9};
+  bool is_init = false;
+  uint8_t curr_func = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   HAL_Delay(10);
+  SetDigit(disp_idx, 10);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -429,21 +402,7 @@ int main(void)
       if (first_tim_call_set_digit) {
         first_tim_call_set_digit = false;
       } else {
-        if (curr_func == 1) {
-          if (Ncv7719_HideAllSegment(disp_idx)) {
-            if (++disp_idx >= NUM_DISPLAY) {
-              disp_idx = 0;
-              curr_func *= -1;
-            }
-          }
-        } else if (curr_func == 2) {
-          if (Ncv7719_ShowAllSegment(disp_idx)) {
-            if (++disp_idx >= NUM_DISPLAY) {
-              disp_idx = 0;
-              curr_func *= -1;
-            }
-          }
-        }
+        SpiTransmit32();
       }
       ++led_blink_count;
     }
@@ -453,16 +412,27 @@ int main(void)
     } else if (led_blink_count == LED_BLINK_PERIOD) {
       HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
       led_blink_count = 0;
-      // next_digit[0] += 1;
-      // if (next_digit[0] > 9) {
-      //   next_digit[0] = 0;
-      // }
-      if (curr_func < 0) {
-        curr_func *= -1;
-        ++curr_func;
-        if (curr_func > 2) {
-          curr_func = 1;
+      if (true) {
+        if (!is_init) {
+          is_init = true;
+          SetDigit(disp_idx, 11);
+        } else {
+          next_digit[disp_idx] += 1;
+          if (next_digit[disp_idx] > 9) {
+            next_digit[disp_idx] = 0;
+          }
+          SetDigit(disp_idx, next_digit[disp_idx]);
         }
+      } else {
+        if (curr_func > 1) {
+          curr_func = 0;
+        }
+        if (curr_func == 0) {
+          SetDigit(disp_idx, 10);
+        } else if (curr_func == 1) {
+          SetDigit(disp_idx, 11);
+        }
+        ++curr_func;
       }
     }
   }
