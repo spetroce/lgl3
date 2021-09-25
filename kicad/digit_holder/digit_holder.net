@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/spetroce/code/src/lgl3/kicad/digit_holder/digit_holder/digit_holder.sch)
-    (date "Wed 22 Sep 2021 10:33:31 PM EDT")
+    (date "Thu 23 Sep 2021 02:27:05 AM EDT")
     (tool "Eeschema 5.1.10-6.fc34")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
