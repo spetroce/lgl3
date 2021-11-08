@@ -1,7 +1,7 @@
 (sym_lib_table
   (lib (name flip_dot_clock)(type Legacy)(uri ${KIPRJMOD}/flip_dot_clock.lib)(options "")(descr ""))
-  (lib (name mio)(type Legacy)(uri ${KIPRJMOD}/parts/mio.lib)(options "")(descr ""))
+  (lib (name mio)(type Legacy)(uri ${KIPRJMOD}/../parts/mio.lib)(options "")(descr ""))
   (lib (name flip_dot_clock-rescue)(type Legacy)(uri ${KIPRJMOD}/flip_dot_clock-rescue.lib)(options "")(descr ""))
-  (lib (name 10uf_0805)(type Legacy)(uri ${KIPRJMOD}/parts/GRM21BR6YA106KE43L/GRM21BR6YA106KE43L.lib)(options "")(descr ""))
-  (lib (name 0_1uf_0805)(type Legacy)(uri ${KIPRJMOD}/parts/GCM21BR91H104KA37L/GCM21BR91H104KA37L.lib)(options "")(descr ""))
+  (lib (name 10uf_0805)(type Legacy)(uri ${KIPRJMOD}/../parts/GRM21BR6YA106KE43L/GRM21BR6YA106KE43L.lib)(options "")(descr ""))
+  (lib (name 0_1uf_0805)(type Legacy)(uri ${KIPRJMOD}/../parts/GCM21BR91H104KA37L/GCM21BR91H104KA37L.lib)(options "")(descr ""))
 )

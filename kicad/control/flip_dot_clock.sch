@@ -59,180 +59,6 @@ Wire Wire Line
 	5250 2000 5250 2700
 Wire Wire Line
 	5250 2700 5350 2700
-$Comp
-L Regulator_Switching:TPS62177DQC U0
-U 1 1 5CEAFD4A
-P 2200 2500
-F 0 "U0" H 2200 3067 50  0000 C CNN
-F 1 "TPS62177DQC" H 2200 2976 50  0000 C CNN
-F 2 "Package_SON:WSON-10-1EP_2x3mm_P0.5mm_EP0.84x2.4mm_ThermalVias" H 2350 2050 50  0001 L CNN
-F 3 "http://www.ti.com/lit/ds/symlink/tps62177.pdf" H 2200 3050 50  0001 C CNN
-	1    2200 2500
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+24V #PWR?
-U 1 1 5CEB6B1A
-P 1500 2150
-F 0 "#PWR?" H 1500 2000 50  0001 C CNN
-F 1 "+24V" H 1515 2323 50  0000 C CNN
-F 2 "" H 1500 2150 50  0001 C CNN
-F 3 "" H 1500 2150 50  0001 C CNN
-	1    1500 2150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1500 2150 1500 2200
-Wire Wire Line
-	1500 2200 1800 2200
-Wire Wire Line
-	1500 2200 1500 2300
-Wire Wire Line
-	1500 2300 1800 2300
-Connection ~ 1500 2200
-$Comp
-L power:GND #PWR?
-U 1 1 5CEC813E
-P 2800 2550
-F 0 "#PWR?" H 2800 2300 50  0001 C CNN
-F 1 "GND" H 2805 2377 50  0000 C CNN
-F 2 "" H 2800 2550 50  0001 C CNN
-F 3 "" H 2800 2550 50  0001 C CNN
-	1    2800 2550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2600 2400 2800 2400
-Wire Wire Line
-	2800 2400 2800 2550
-$Comp
-L Device:L L0
-U 1 1 5CECE6BE
-P 2900 2200
-F 0 "L0" V 2719 2200 50  0000 C CNN
-F 1 "10uH" V 2810 2200 50  0000 C CNN
-F 2 "" H 2900 2200 50  0001 C CNN
-F 3 "~" H 2900 2200 50  0001 C CNN
-	1    2900 2200
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	2600 2200 2750 2200
-Wire Wire Line
-	3050 2200 3150 2200
-Wire Wire Line
-	3150 2200 3150 2300
-Wire Wire Line
-	3150 2300 2600 2300
-$Comp
-L power:GND #PWR?
-U 1 1 5CEE129C
-P 2200 3300
-F 0 "#PWR?" H 2200 3050 50  0001 C CNN
-F 1 "GND" H 2205 3127 50  0000 C CNN
-F 2 "" H 2200 3300 50  0001 C CNN
-F 3 "" H 2200 3300 50  0001 C CNN
-	1    2200 3300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R0
-U 1 1 5CEEA859
-P 3150 2650
-F 0 "R0" H 3220 2696 50  0000 L CNN
-F 1 "100k" H 3220 2605 50  0000 L CNN
-F 2 "" V 3080 2650 50  0001 C CNN
-F 3 "~" H 3150 2650 50  0001 C CNN
-	1    3150 2650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3150 2300 3150 2500
-Connection ~ 3150 2300
-Wire Wire Line
-	3150 2800 3150 3100
-Wire Wire Line
-	3150 3100 1600 3100
-Wire Wire Line
-	1600 3100 1600 2700
-Wire Wire Line
-	1600 2700 1800 2700
-$Comp
-L power:+3V3 #PWR?
-U 1 1 5CEF7AF9
-P 3600 2100
-F 0 "#PWR?" H 3600 1950 50  0001 C CNN
-F 1 "+3V3" H 3615 2273 50  0000 C CNN
-F 2 "" H 3600 2100 50  0001 C CNN
-F 3 "" H 3600 2100 50  0001 C CNN
-	1    3600 2100
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3150 2200 3600 2200
-Connection ~ 3150 2200
-Wire Wire Line
-	3600 2100 3600 2200
-$Comp
-L power:GND #PWR?
-U 1 1 5CF0DDD0
-P 3600 2750
-F 0 "#PWR?" H 3600 2500 50  0001 C CNN
-F 1 "GND" H 3605 2577 50  0000 C CNN
-F 2 "" H 3600 2750 50  0001 C CNN
-F 3 "" H 3600 2750 50  0001 C CNN
-	1    3600 2750
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C C0
-U 1 1 5CF0E2DE
-P 3600 2450
-F 0 "C0" H 3715 2496 50  0000 L CNN
-F 1 "22uF" H 3715 2405 50  0000 L CNN
-F 2 "" H 3638 2300 50  0001 C CNN
-F 3 "~" H 3600 2450 50  0001 C CNN
-	1    3600 2450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3600 2200 3600 2300
-Connection ~ 3600 2200
-Wire Wire Line
-	3600 2600 3600 2750
-$Comp
-L power:+3V3 #PWR?
-U 1 1 5CF2D3B4
-P 1300 2450
-F 0 "#PWR?" H 1300 2300 50  0001 C CNN
-F 1 "+3V3" H 1315 2623 50  0000 C CNN
-F 2 "" H 1300 2450 50  0001 C CNN
-F 3 "" H 1300 2450 50  0001 C CNN
-	1    1300 2450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1300 2450 1300 2500
-Wire Wire Line
-	1300 2500 1800 2500
-Wire Wire Line
-	2000 3250 2100 3250
-Wire Wire Line
-	2000 3000 2000 3250
-Wire Wire Line
-	2200 3000 2200 3250
-Wire Wire Line
-	2200 3250 2200 3300
-Connection ~ 2200 3250
-Wire Wire Line
-	2300 3000 2300 3250
-Wire Wire Line
-	2300 3250 2200 3250
-Wire Wire Line
-	2100 3000 2100 3250
-Connection ~ 2100 3250
-Wire Wire Line
-	2100 3250 2200 3250
 Wire Wire Line
 	6250 2600 6650 2600
 Text Label 6650 2700 0    50   ~ 0
@@ -271,8 +97,6 @@ Wire Wire Line
 Wire Wire Line
 	6450 3300 6300 3300
 Connection ~ 6300 3300
-Text Label 6750 5050 0    50   ~ 0
-NCV0_COM_OUT
 Text Label 6650 2400 0    50   ~ 0
 NCV0_COM_OUT
 Wire Wire Line
@@ -282,13 +106,9 @@ SCLK
 Wire Wire Line
 	5350 2300 5050 2300
 Wire Wire Line
-	5050 2300 5050 3700
-Wire Wire Line
 	6250 2300 6550 2300
 Wire Wire Line
 	6250 3200 6650 3200
-Wire Wire Line
-	6650 3200 6650 4900
 Wire Wire Line
 	5350 2400 4950 2400
 Wire Wire Line
@@ -296,22 +116,7 @@ Wire Wire Line
 Wire Wire Line
 	5350 3200 4750 3200
 Wire Wire Line
-	4750 3200 4750 5700
-Wire Wire Line
 	5350 3100 4650 3100
-$Comp
-L mio:Small_7_Seg_FlipDot DS0
-U 1 1 5D1F5028
-P 5600 3950
-F 0 "DS0" H 5775 2211 50  0000 C CNN
-F 1 "Small_7_Seg_FlipDot" H 5775 2120 50  0000 C CNN
-F 2 "" H 5600 3950 50  0001 C CNN
-F 3 "" H 5600 3950 50  0001 C CNN
-	1    5600 3950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4850 3800 4850 2500
 $Comp
 L Timer_RTC:DS3231M U?
 U 1 1 5E4A5147
@@ -389,7 +194,7 @@ Wire Wire Line
 	8950 3000 9150 3000
 Connection ~ 8950 3000
 $Comp
-L mio:NCV7719 U2
+L flip_dot_clock-rescue:NCV7719-mio U2
 U 1 1 5CEE231A
 P 5800 2750
 F 0 "U2" H 5800 3565 50  0000 C CNN
@@ -403,71 +208,6 @@ Text Label 4750 2900 2    50   ~ 0
 NCV_EN
 Wire Wire Line
 	4750 2900 5350 2900
-Wire Wire Line
-	5050 3700 5700 3700
-Wire Wire Line
-	5700 3700 5700 4050
-Wire Wire Line
-	6550 2300 6550 4600
-Wire Wire Line
-	6250 4600 6550 4600
-Wire Wire Line
-	6650 4900 6250 4900
-Wire Wire Line
-	5500 5600 5500 5700
-Wire Wire Line
-	5500 5700 4750 5700
-Wire Wire Line
-	4950 5050 5300 5050
-Wire Wire Line
-	4950 2400 4950 5050
-Wire Wire Line
-	4650 4750 5300 4750
-Wire Wire Line
-	4650 3100 4650 4750
-Wire Wire Line
-	4850 3800 5550 3800
-Wire Wire Line
-	5550 3800 5550 4050
-Wire Wire Line
-	5650 5600 5650 5700
-Wire Wire Line
-	5650 5700 6350 5700
-Wire Wire Line
-	6350 5700 6350 5050
-Wire Wire Line
-	6350 5050 6250 5050
-Wire Wire Line
-	6350 5050 6350 4750
-Wire Wire Line
-	6350 4750 6250 4750
-Connection ~ 6350 5050
-Wire Wire Line
-	5300 4900 5200 4900
-Wire Wire Line
-	5200 4900 5200 4600
-Wire Wire Line
-	5200 4600 5300 4600
-Wire Wire Line
-	5200 4600 5200 3950
-Wire Wire Line
-	5200 3950 5850 3950
-Wire Wire Line
-	5850 3950 5850 4050
-Connection ~ 5200 4600
-Wire Wire Line
-	5850 3950 6000 3950
-Wire Wire Line
-	6000 3950 6000 4050
-Connection ~ 5850 3950
-Wire Wire Line
-	6000 3950 6350 3950
-Wire Wire Line
-	6350 3950 6350 4750
-Connection ~ 6000 3950
-Connection ~ 6350 4750
-Wire Wire Line
-	6350 5050 6750 5050
 $Comp
 L Diode:MRA4003T3G D?
 U 1 1 61291564
@@ -479,4 +219,52 @@ F 3 "http://www.onsemi.com/pub_link/Collateral/MRA4003T3-D.PDF" H 6500 1850 50  
 	1    6500 1850
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector:Conn_01x15_Female J?
+U 1 1 6179AA3C
+P 1600 5000
+F 0 "J?" H 1628 5026 50  0000 L CNN
+F 1 "Conn_01x15_Female" H 1628 4935 50  0000 L CNN
+F 2 "" H 1600 5000 50  0001 C CNN
+F 3 "~" H 1600 5000 50  0001 C CNN
+	1    1600 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x15_Female J?
+U 1 1 6179BFD1
+P 2900 5000
+F 0 "J?" H 2928 5026 50  0000 L CNN
+F 1 "Conn_01x15_Female" H 2928 4935 50  0000 L CNN
+F 2 "" H 2900 5000 50  0001 C CNN
+F 3 "~" H 2900 5000 50  0001 C CNN
+	1    2900 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 617CAB14
+P 1250 4600
+F 0 "#PWR?" H 1250 4350 50  0001 C CNN
+F 1 "GND" H 1255 4427 50  0000 C CNN
+F 2 "" H 1250 4600 50  0001 C CNN
+F 3 "" H 1250 4600 50  0001 C CNN
+	1    1250 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 617CB25B
+P 2550 4400
+F 0 "#PWR?" H 2550 4150 50  0001 C CNN
+F 1 "GND" H 2555 4227 50  0000 C CNN
+F 2 "" H 2550 4400 50  0001 C CNN
+F 3 "" H 2550 4400 50  0001 C CNN
+	1    2550 4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 4400 2700 4400
+Wire Wire Line
+	1250 4600 1400 4600
 $EndSCHEMATC
