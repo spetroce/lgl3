@@ -1,4 +1,4 @@
-18993161137933319
+18998070907911032
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50714,6 +50714,13 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+EEUFR1H151B
+CAPPRD500W60D1000H1250
+
+
+0
+2
+2
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
@@ -83027,6 +83034,13 @@ varistor SIOV
 2
 2
 mio
+NUCLEO-F303K8-HEADER
+
+
+0
+30
+30
+mio
 SLC03B-05
 
 
@@ -83047,3 +83061,10 @@ Small_7_Seg_FlipDot
 0
 14
 14
+mio
+Small_7_Seg_FlipDot_Module
+
+
+0
+15
+15

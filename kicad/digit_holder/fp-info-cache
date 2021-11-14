@@ -1,4 +1,4 @@
-18991525487433319
+18996433839472319
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -83027,6 +83027,20 @@ varistor SIOV
 2
 2
 mio
+NUCLEO-F303K8-HEADER
+
+
+0
+30
+30
+mio
+SLC03B-05
+
+
+0
+6
+6
+mio
 SSOP-24_6.4x7.55mm_P0.65mm
 
 
@@ -83040,3 +83054,10 @@ Small_7_Seg_FlipDot
 0
 14
 14
+mio
+Small_7_Seg_FlipDot_Module
+
+
+0
+15
+15

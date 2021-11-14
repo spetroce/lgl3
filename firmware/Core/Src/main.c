@@ -174,10 +174,10 @@ bool TxDataPop(uint32_t * tx_data, uint8_t * disp_idx) {
 // GPIO_PIN_RESET = disable
 // returns true if pin_state was already the current setting
 bool EnableDispDriver(const GPIO_PinState pin_state) {
-  if (HAL_GPIO_ReadPin(NCV_EN_GPIO_Port, NCV_EN_Pin) == pin_state) {
+  if (HAL_GPIO_ReadPin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin) == pin_state) {
     return true;
   } else {
-    HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, pin_state);
+    HAL_GPIO_WritePin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin, pin_state);
   }
   return false;
 }
@@ -196,8 +196,8 @@ void SpiTransmit32() {
   const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
   tx_data |= ncv7719_hbsel;
   uint16_t * tx_data_word = (uint16_t*)&tx_data;
-  GPIO_TypeDef * gpio_port[] = {SPI1_CS_0_GPIO_Port, SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port};
-  uint16_t gpio_pin[] = {SPI1_CS_0_Pin, SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin};
+  GPIO_TypeDef * gpio_port[] = {SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port, SPI1_CS_4_GPIO_Port};
+  uint16_t gpio_pin[] = {SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin, SPI1_CS_4_Pin};
   // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
   HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
   LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
@@ -367,7 +367,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(NCV_EN_GPIO_Port, NCV_EN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin, GPIO_PIN_RESET);
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
   if (!LL_SPI_IsEnabled(SPI1)) {
     LL_SPI_Enable(SPI1);
