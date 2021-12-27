@@ -1,4 +1,3 @@
 (fp_lib_table
   (lib (name mio)(type KiCad)(uri ${KIPRJMOD}/../parts/mio.pretty)(options "")(descr ""))
-  (lib (name EEUFR1H151B)(type KiCad)(uri /home/spetroce/code/src/lgl3/kicad/parts/EEUFR1H151B)(options "")(descr ""))
 )
