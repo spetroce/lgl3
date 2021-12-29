@@ -1,6 +1,6 @@
 Configuration	flip_dot_clock
-STM32CubeMX 	6.3.0
-Date	11/09/2021
+STM32CubeMX 	6.4.0
+Date	12/28/2021
 MCU	STM32F303K8Tx
 
 
@@ -76,7 +76,7 @@ Project Settings :
 Project Name : flip_dot_clock
 Project Folder : /home/spetroce/code/src/lgl3/firmware
 Toolchain / IDE : Makefile
-Firmware Package Name and Version : STM32Cube FW_F3 V1.11.2
+Firmware Package Name and Version : STM32Cube FW_F3 V1.11.3
 
 
 Code Generation Settings : 
