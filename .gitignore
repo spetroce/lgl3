@@ -3,3 +3,4 @@ test/*
 !test/test.cpp
 *.mxproject
 kicad/*/*.bck
+kicad/control/flip_dot_clock-backups/
