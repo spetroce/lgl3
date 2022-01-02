@@ -74,6 +74,10 @@ void Error_Handler(void);
 #define MCO_GPIO_Port GPIOF
 #define NCV_EN_4_Pin GPIO_PIN_1
 #define NCV_EN_4_GPIO_Port GPIOF
+#define HW_ADDR_0_Pin GPIO_PIN_0
+#define HW_ADDR_0_GPIO_Port GPIOA
+#define HW_ADDR_1_Pin GPIO_PIN_1
+#define HW_ADDR_1_GPIO_Port GPIOA
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
 #define SPI1_SCK_Pin GPIO_PIN_5
