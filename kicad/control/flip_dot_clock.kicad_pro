@@ -478,10 +478,10 @@
   "pcbnew": {
     "last_paths": {
       "gencad": "",
-      "idf": "",
+      "idf": "../../../../../Downloads/flip_dot_clock.emn",
       "netlist": "flip_dot_clock.net",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../../../../../Downloads/flip_dot_clock.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
