@@ -1,4 +1,4 @@
-(footprint "Small_7_Seg_FlipDot_Module" (version 20221231) (generator pcbnew)
+(footprint "Small_7_Seg_FlipDot_Module" (version 20221232) (generator pcbnew)
   (layer "F.Cu")
   (tedit 61DA61F0)
   (attr through_hole)

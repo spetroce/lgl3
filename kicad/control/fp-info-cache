@@ -1,4 +1,4 @@
-19816235655088405
+19835128462791270
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -61901,6 +61901,13 @@ CSP 16 0.35
 16
 16
 Package_CSP
+WLCSP-16_2.225x2.17mm_P0.5mm
+WLCSP-16 2.225x2.17mm, 2.17x2.225mm, 16 Ball, 4x4 Layout, 0.5mm Pitch, https://ww1.microchip.com/downloads/en/DeviceDoc/16B_WLCSP_CS_C04-06036c.pdf
+CSP 16 0.5
+0
+16
+16
+Package_CSP
 WLCSP-16_4x4_B2.17x2.32mm_P0.5mm
 WLCSP-16, http://www.nxp.com/documents/data_sheet/LPC1102_1104.pdf, http://www.nxp.com/assets/documents/data/en/application-notes/AN3846.pdf
 WLCSP-16 NXP
@@ -65211,6 +65218,20 @@ DFN 0.5
 0
 11
 9
+Package_DFN_QFN
+VQFN-16-1EP_3x3mm_P0.5mm_EP1.1x1.1mm
+VQFN, 16 Pin (https://ww1.microchip.com/downloads/en/DeviceDoc/16L_VQFN-WFS_3x3mm_4MX_C04-00508a.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
+VQFN NoLead
+0
+18
+17
+Package_DFN_QFN
+VQFN-16-1EP_3x3mm_P0.5mm_EP1.1x1.1mm_ThermalVias
+VQFN, 16 Pin (https://ww1.microchip.com/downloads/en/DeviceDoc/16L_VQFN-WFS_3x3mm_4MX_C04-00508a.pdf), generated with kicad-footprint-generator ipc_noLead_generator.py
+VQFN NoLead
+0
+23
+17
 Package_DFN_QFN
 VQFN-16-1EP_3x3mm_P0.5mm_EP1.6x1.6mm
 VQFN, 16 Pin (http://www.ti.com/lit/ds/symlink/cdclvp1102.pdf#page=28), generated with kicad-footprint-generator ipc_noLead_generator.py
@@ -69652,6 +69673,13 @@ SOIC SO
 Package_SO
 SOIC-20W_7.5x12.8mm_P1.27mm
 SOIC, 20 Pin (JEDEC MS-013AC, https://www.analog.com/media/en/package-pcb-resources/package/233848rw_20.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOIC SO
+0
+20
+20
+Package_SO
+SOIC-20W_7.5x15.4mm_P1.27mm
+SOIC, 20 Pin (JEDEC MS-013AD, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RI_20_1.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
 SOIC SO
 0
 20

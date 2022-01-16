@@ -1,4 +1,4 @@
-(footprint "NUCLEO-F303K8-HEADER" (version 20221231) (generator pcbnew)
+(footprint "NUCLEO-F303K8-HEADER" (version 20221232) (generator pcbnew)
   (layer "F.Cu")
   (tedit 61DA62D3)
   (attr through_hole)
