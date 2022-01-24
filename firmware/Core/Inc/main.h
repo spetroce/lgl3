@@ -92,8 +92,17 @@ void Error_Handler(void);
 #define SPI1_CS_4_GPIO_Port GPIOB
 #define NCV_EN_3_Pin GPIO_PIN_8
 #define NCV_EN_3_GPIO_Port GPIOA
+#define HOUR_UP_EXTI9_Pin GPIO_PIN_9
+#define HOUR_UP_EXTI9_GPIO_Port GPIOA
+#define HOUR_UP_EXTI9_EXTI_IRQn EXTI9_5_IRQn
+#define HOUR_DOWN_EXTI10_Pin GPIO_PIN_10
+#define HOUR_DOWN_EXTI10_GPIO_Port GPIOA
+#define HOUR_DOWN_EXTI10_EXTI_IRQn EXTI15_10_IRQn
 #define NCV_EN_2_Pin GPIO_PIN_11
 #define NCV_EN_2_GPIO_Port GPIOA
+#define MIN_UP_EXTI12_Pin GPIO_PIN_12
+#define MIN_UP_EXTI12_GPIO_Port GPIOA
+#define MIN_UP_EXTI12_EXTI_IRQn EXTI15_10_IRQn
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
@@ -102,6 +111,9 @@ void Error_Handler(void);
 #define VCP_RX_GPIO_Port GPIOA
 #define LED_GREEN_Pin GPIO_PIN_3
 #define LED_GREEN_GPIO_Port GPIOB
+#define MIN_DOWN_EXTI4_Pin GPIO_PIN_4
+#define MIN_DOWN_EXTI4_GPIO_Port GPIOB
+#define MIN_DOWN_EXTI4_EXTI_IRQn EXTI4_IRQn
 #define NCV_EN_1_Pin GPIO_PIN_5
 #define NCV_EN_1_GPIO_Port GPIOB
 #define SPI1_CS_3_Pin GPIO_PIN_6

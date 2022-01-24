@@ -79,6 +79,7 @@
         "items_not_allowed": "error",
         "length_out_of_range": "error",
         "lib_footprint_issues": "error",
+        "lib_footprint_mismatch": "error",
         "malformed_courtyard": "error",
         "microvia_drill_out_of_range": "error",
         "missing_courtyard": "ignore",
@@ -450,6 +451,10 @@
         "microvia_drill": 0.1,
         "name": "Signal",
         "nets": [
+          "/HOUR_DOWN",
+          "/HOUR_UP",
+          "/MIN_DOWN",
+          "/MIN_UP",
           "/NCV_EN_1",
           "/NCV_EN_2",
           "/NCV_EN_3",

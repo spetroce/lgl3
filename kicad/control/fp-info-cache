@@ -1,4 +1,4 @@
-19835128462791270
+19872801909130519
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -7889,8 +7889,15 @@ connector barrel jack
 3
 3
 Connector_Card
-CF-Card_3M_N7E50-7516PK-20-WF
-Compact Flash Card connector (https://multimedia.3m.com/mws/media/22365O/3mtm-cf-card-header-compactflashtm-type-i-sm-ts0662.pdf)
+CF-Card_3M_N7E50-A516xx-30
+Compact Flash Card connector, polarization inverse (https://multimedia.3m.com/mws/media/22424O/3mtm-cf-card-header-type-i-low-profile-surface-mount-ts0747.pdf)
+connector cf
+0
+54
+50
+Connector_Card
+CF-Card_3M_N7E50-E516xx-30
+Compact Flash Card connector, normal polarization (https://multimedia.3m.com/mws/media/22424O/3mtm-cf-card-header-type-i-low-profile-surface-mount-ts0747.pdf)
 connector cf
 0
 54
@@ -52437,6 +52444,13 @@ inductor handsolder
 2
 2
 Inductor_SMD
+L_AVX_LMLP07A7
+Inductor, AVX Kyocera, LMLP Series, style D, 6.6mmx7.3mm, 3.0mm height. (Script generated with StandardBox.py) (https://datasheets.avx.com/LMLPD.pdf)
+Inductor LMLP
+0
+2
+2
+Inductor_SMD
 L_Abracon_ASPI-0630LR
 smd shielded power inductor https://abracon.com/Magnetics/power/ASPI-0630LR.pdf
 inductor abracon smd shielded
@@ -70112,6 +70126,34 @@ Jedec MO-193C TSOP-6L
 6
 6
 Package_SO
+TSOP-I-24_12.4x6mm_P0.5mm
+TSOP-I, 24 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation AA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+24
+24
+Package_SO
+TSOP-I-24_14.4x6mm_P0.5mm
+TSOP-I, 24 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation AB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+24
+24
+Package_SO
+TSOP-I-24_16.4x6mm_P0.5mm
+TSOP-I, 24 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation AC), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+24
+24
+Package_SO
+TSOP-I-24_18.4x6mm_P0.5mm
+TSOP-I, 24 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation AD), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+24
+24
+Package_SO
 TSOP-I-28_11.8x8mm_P0.55mm
 TSOP I, 28 pins, 18.8x8mm body, 0.55mm pitch, IPC-calculated pads (http://ww1.microchip.com/downloads/en/devicedoc/doc0807.pdf)
 TSOP I 28 pins
@@ -70121,6 +70163,27 @@ TSOP I 28 pins
 Package_SO
 TSOP-I-32_11.8x8mm_P0.5mm
 TSOP-I, 32 Pin (http://www.issi.com/WW/pdf/61-64C5128AL.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+32
+32
+Package_SO
+TSOP-I-32_12.4x8mm_P0.5mm
+TSOP-I, 32 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation BA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+32
+32
+Package_SO
+TSOP-I-32_14.4x8mm_P0.5mm
+TSOP-I, 32 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation BB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+32
+32
+Package_SO
+TSOP-I-32_16.4x8mm_P0.5mm
+TSOP-I, 32 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation BC), generated with kicad-footprint-generator ipc_gullwing_generator.py
 TSOP-I SO
 0
 32
@@ -70140,12 +70203,75 @@ TSOP I 32 reverse
 32
 32
 Package_SO
+TSOP-I-40_12.4x10mm_P0.5mm
+TSOP-I, 40 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation CA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+40
+40
+Package_SO
+TSOP-I-40_14.4x10mm_P0.5mm
+TSOP-I, 40 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation CB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+40
+40
+Package_SO
+TSOP-I-40_16.4x10mm_P0.5mm
+TSOP-I, 40 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation CC), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+40
+40
+Package_SO
+TSOP-I-40_18.4x10mm_P0.5mm
+TSOP-I, 40 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation CD), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+40
+40
+Package_SO
+TSOP-I-48_12.4x12mm_P0.5mm
+TSOP-I, 48 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation DA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+48
+48
+Package_SO
+TSOP-I-48_14.4x12mm_P0.5mm
+TSOP-I, 48 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation DB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+48
+48
+Package_SO
+TSOP-I-48_16.4x12mm_P0.5mm
+TSOP-I, 48 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation DC), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+48
+48
+Package_SO
 TSOP-I-48_18.4x12mm_P0.5mm
 TSOP I, 32 pins, 18.4x8mm body (https://www.micron.com/~/media/documents/products/technical-note/nor-flash/tn1225_land_pad_design.pdf)
 TSOP I 32
 0
 48
 48
+Package_SO
+TSOP-I-56_14.4x14mm_P0.5mm
+TSOP-I, 56 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation EA), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+56
+56
+Package_SO
+TSOP-I-56_16.4x14mm_P0.5mm
+TSOP-I, 56 Pin (https://www.jedec.org/standards-documents/docs/mo-142-d variation EB), generated with kicad-footprint-generator ipc_gullwing_generator.py
+TSOP-I SO
+0
+56
+56
 Package_SO
 TSOP-I-56_18.4x14mm_P0.5mm
 TSOP I, 32 pins, 18.4x8mm body (https://www.micron.com/~/media/documents/products/technical-note/nor-flash/tn1225_land_pad_design.pdf)
@@ -71548,28 +71674,28 @@ SOT-89-5
 5
 Package_TO_SOT_SMD
 SOT-143
-SOT-143
+SOT-143 https://www.nxp.com/docs/en/package-information/SOT143B.pdf
 SOT-143
 0
 4
 4
 Package_TO_SOT_SMD
-SOT-143R_Reverse
-SOT-143R Reverse
+SOT-143R
+SOT-143R, reverse pinning, https://www.nxp.com/docs/en/package-information/SOT143R.pdf
 SOT-143R Reverse
 0
 4
 4
 Package_TO_SOT_SMD
-SOT-143R_Reverse_Handsoldering
-SOT-143R Reverse Handsoldering
+SOT-143R_Handsoldering
+SOT-143R, reverse pinning, Handsoldering, https://www.nxp.com/docs/en/package-information/SOT143R.pdf
 SOT-143 Reverse Handsoldering
 0
 4
 4
 Package_TO_SOT_SMD
 SOT-143_Handsoldering
-SOT-143 Handsoldering
+SOT-143 Handsoldering https://www.nxp.com/docs/en/package-information/SOT143B.pdf
 SOT-143 Handsoldering
 0
 4
@@ -74593,7 +74719,7 @@ Potentiometer Trimmer RM-063
 3
 Potentiometer_THT
 Potentiometer_Runtron_RM-065_Vertical
-Potentiometer, vertical, Trimmer, RM-065 http://www.runtron.com/down/PDF%20Datasheet/Carbon%20Film%20Potentiometer/RM065%20RM063.pdf
+Potentiometer, vertical, Trimmer, RM-065 https://components101.com/sites/default/files/component_datasheet/Preset%20Potentiometer%20%28Trimpot%29.pdf
 Potentiometer Trimmer RM-065
 0
 3
