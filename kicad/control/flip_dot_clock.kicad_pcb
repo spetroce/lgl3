@@ -3845,8 +3845,6 @@
     )
   )
 
-  (gr_circle (center 147.066 76.581) (end 147.574 76.327)
-    (stroke (width 0.2) (type default)) (fill none) (layer "In1.Cu") (tstamp 1fbf2305-956f-45f6-b827-8b94dc143c70))
   (gr_line (start 79.248 118.491) (end 79.248 80.391)
     (stroke (width 0.05) (type solid)) (layer "Edge.Cuts") (tstamp 00000000-0000-0000-0000-0000618b6515))
   (gr_line (start 79.248 80.391) (end 205.994 80.391)
