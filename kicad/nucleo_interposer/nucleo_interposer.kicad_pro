@@ -527,7 +527,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../parts/nucleo_interposer.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
