@@ -7,3 +7,4 @@ kicad/*/*.bak
 kicad/*/#auto_saved_files#
 kicad/*/_autosave*
 kicad/control/flip_dot_clock-backups/
+kicad/nucleo_interposer/nucleo_interposer-backups
