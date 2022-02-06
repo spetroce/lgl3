@@ -3,8 +3,9 @@ test/*
 !test/test.cpp
 *.mxproject
 kicad/*/*.bck
-kicad/*/*.bak
+kicad/*/*bak
 kicad/*/#auto_saved_files#
 kicad/*/_autosave*
-kicad/control/flip_dot_clock-backups/
-kicad/nucleo_interposer/nucleo_interposer-backups
+kicad/*/*backups
+kicad/*/fp-info-cache
+kicad/*/*cache.lib
