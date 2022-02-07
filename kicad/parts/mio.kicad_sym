@@ -430,7 +430,7 @@
         (name "G_RESET" (effects (font (size 1.27 1.27))))
         (number "14" (effects (font (size 1.27 1.27))))
       )
-      (pin no_connect line (at -15.24 -19.05 0) (length 2.54)
+      (pin input line (at -15.24 -19.05 0) (length 2.54)
         (name "NC" (effects (font (size 1.27 1.27))))
         (number "15" (effects (font (size 1.27 1.27))))
       )
