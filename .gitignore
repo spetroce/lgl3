@@ -2,10 +2,6 @@ build/
 test/*
 !test/test.cpp
 *.mxproject
-kicad/*/*.bck
-kicad/*/*bak
-kicad/*/#auto_saved_files#
-kicad/*/_autosave*
 kicad/*/*backups
 kicad/*/fp-info-cache
-kicad/*/*cache.lib
+kicad/parts/*.bak
