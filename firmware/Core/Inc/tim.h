@@ -37,7 +37,7 @@ extern TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN Private defines */
 
 /// Times the Ncv7719_SetDigit() to be called every 500us
-extern volatile bool g_tim_call_set_digit;
+extern volatile bool g_tim_transmit_spi;
 
 /* USER CODE END Private defines */
 

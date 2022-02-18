@@ -305,6 +305,7 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
                  all_bits_to_turn_off = digit_cfg[curr_digit] & digit_xor;
   // We can only turn on or off up to two segments at a time so create
   // incremental masks to go from the previous digit to the next one.
+  const uint8_t MAX_SIMULTANEOUS_SEG = 2;
   uint32_t bits_to_turn_on[8] = {0},
            bits_to_turn_off[8] = {0};
   uint8_t bits_to_turn_on_len = 0,
@@ -314,23 +315,23 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
     if (all_bits_to_turn_on & seg_mask[i]) {
       bits_to_turn_on[bits_to_turn_on_len] |= seg_mask[i];
       ++j;
-      if (j == 2) {
+      if (j == MAX_SIMULTANEOUS_SEG) {
         j = 0;
         ++bits_to_turn_on_len;
       }
     } else if (all_bits_to_turn_off & seg_mask[i]) {
       bits_to_turn_off[bits_to_turn_off_len] |= seg_mask[i];
       ++k;
-      if (k == 2) {
+      if (k == MAX_SIMULTANEOUS_SEG) {
         ++bits_to_turn_off_len;
         k = 0;
       }
     }
   }
-  if (j % 2 != 0) {
+  if (j % MAX_SIMULTANEOUS_SEG != 0) {
     ++bits_to_turn_on_len;
   }
-  if (k % 2 != 0) {
+  if (k % MAX_SIMULTANEOUS_SEG != 0) {
     ++bits_to_turn_off_len;
   }
   for (i = 0; i < bits_to_turn_on_len; ++i) {
@@ -387,7 +388,7 @@ int main(void)
   // is good for the doing logic analyzer work).
   LL_SPI_TransmitData16(SPI1, 0xBEEF);
   HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
-  // g_tim_call_set_digit frequency is 2000 Hz
+  // g_tim_transmit_spi frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
                  LED_BLINK_PERIOD = 2000;  // 1 sec
   const uint32_t LED_ON_START_COUNT = LED_BLINK_PERIOD - LED_ON_DURATION;
@@ -408,8 +409,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if (g_tim_call_set_digit) {
-      g_tim_call_set_digit = false;
+    if (g_tim_transmit_spi) {
+      g_tim_transmit_spi = false;
       if (first_tim_call_set_digit) {
         first_tim_call_set_digit = false;
       } else {
