@@ -5,3 +5,4 @@ test/*
 kicad/*/*backups
 kicad/*/fp-info-cache
 kicad/parts/*.bak
+kicad/*/gerber
