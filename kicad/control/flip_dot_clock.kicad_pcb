@@ -1,4 +1,4 @@
-(kicad_pcb (version 20220211) (generator pcbnew)
+(kicad_pcb (version 20220225) (generator pcbnew)
 
   (general
     (thickness 1.756664)
@@ -162,7 +162,7 @@
   (net 73 "/MIN_DOWN")
 
   (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm" (layer "F.Cu")
-    (tedit 61C9202D) (tstamp 00000000-0000-0000-0000-0000618b52f7)
+    (tstamp 00000000-0000-0000-0000-0000618b52f7)
     (at 89.0905 98.933 -90)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -252,7 +252,7 @@
   )
 
   (footprint "mio:Small_7_Seg_FlipDot_Module" (layer "F.Cu")
-    (tedit 61DA61F0) (tstamp 00000000-0000-0000-0000-0000618b531e)
+    (tstamp 00000000-0000-0000-0000-0000618b531e)
     (at 81.28 116.205)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -344,7 +344,7 @@
   )
 
   (footprint "Diode_SMD:D_SMA" (layer "F.Cu")
-    (tedit 586432E5) (tstamp 00000000-0000-0000-0000-000061c96058)
+    (tstamp 00000000-0000-0000-0000-000061c96058)
     (at 96.107 100.838 -90)
     (descr "Diode SMA (DO-214AC)")
     (tags "Diode SMA (DO-214AC)")
@@ -410,7 +410,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 00000000-0000-0000-0000-000061ca1b34)
+    (tstamp 00000000-0000-0000-0000-000061ca1b34)
     (at 102.154354 100.167 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -462,7 +462,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 00000000-0000-0000-0000-000061ca1b45)
+    (tstamp 00000000-0000-0000-0000-000061ca1b45)
     (at 102.154354 97.294 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -514,7 +514,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 0c6adb76-005a-420f-85df-6bac3f42f05e)
+    (tstamp 0c6adb76-005a-420f-85df-6bac3f42f05e)
     (at 194.356354 97.294 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -566,7 +566,7 @@
   )
 
   (footprint "mio:Small_7_Seg_FlipDot_Module" (layer "F.Cu")
-    (tedit 61DA61F0) (tstamp 2150ab02-5bc7-4733-aeca-ea143b680285)
+    (tstamp 2150ab02-5bc7-4733-aeca-ea143b680285)
     (at 108.585 116.205)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -658,7 +658,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 32648182-78d1-48bd-92e8-99a019338fe4)
+    (tstamp 32648182-78d1-48bd-92e8-99a019338fe4)
     (at 82.677 100.457 -90)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -710,7 +710,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 46564e5e-3ce8-4853-9c5a-21f8764785af)
+    (tstamp 46564e5e-3ce8-4853-9c5a-21f8764785af)
     (at 174.879 100.457 -90)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -762,7 +762,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "F.Cu")
-    (tedit 6211D4C9) (tstamp 4cff2599-55b7-4a2a-86b6-c12d591e9e8c)
+    (tstamp 4cff2599-55b7-4a2a-86b6-c12d591e9e8c)
     (at 76.962 115.57)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -790,7 +790,7 @@
   )
 
   (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm" (layer "F.Cu")
-    (tedit 61C9202D) (tstamp 51e6f06b-6633-4b8f-91d1-1056e41108f3)
+    (tstamp 51e6f06b-6633-4b8f-91d1-1056e41108f3)
     (at 153.9875 98.933 -90)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -880,7 +880,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 620dc376-5f0a-4da0-a008-c4659d2068e5)
+    (tstamp 620dc376-5f0a-4da0-a008-c4659d2068e5)
     (at 167.051354 100.167 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -932,7 +932,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "F.Cu")
-    (tedit 6211D4C9) (tstamp 660647b9-bb6c-43db-844a-9cc8d851b675)
+    (tstamp 660647b9-bb6c-43db-844a-9cc8d851b675)
     (at 76.962 83.312)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -960,7 +960,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp 6e25e58d-7d64-40bc-8e6d-9a6f6415defe)
+    (tstamp 6e25e58d-7d64-40bc-8e6d-9a6f6415defe)
     (at 129.459354 100.167 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1012,7 +1012,7 @@
   )
 
   (footprint "Diode_SMD:D_SMA" (layer "F.Cu")
-    (tedit 586432E5) (tstamp 89727264-ef8c-40e4-8b3a-52bdf9826943)
+    (tstamp 89727264-ef8c-40e4-8b3a-52bdf9826943)
     (at 123.412 100.838 -90)
     (descr "Diode SMA (DO-214AC)")
     (tags "Diode SMA (DO-214AC)")
@@ -1078,7 +1078,7 @@
   )
 
   (footprint "mio:Small_7_Seg_FlipDot_Module" (layer "F.Cu")
-    (tedit 61DA61F0) (tstamp 9276bf9b-eaf6-4f21-9272-ceebdf13fa82)
+    (tstamp 9276bf9b-eaf6-4f21-9272-ceebdf13fa82)
     (at 146.177 116.205)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -1170,7 +1170,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "F.Cu")
-    (tedit 6211D4C9) (tstamp a6bfb149-b11f-4680-b3ab-80966f32f170)
+    (tstamp a6bfb149-b11f-4680-b3ab-80966f32f170)
     (at 203.2 83.312)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -1198,7 +1198,7 @@
   )
 
   (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm" (layer "F.Cu")
-    (tedit 61C9202D) (tstamp b23372e8-727f-4be2-9d83-38018865dbad)
+    (tstamp b23372e8-727f-4be2-9d83-38018865dbad)
     (at 116.3955 98.933 -90)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -1288,7 +1288,7 @@
   )
 
   (footprint "Diode_SMD:D_SMA" (layer "F.Cu")
-    (tedit 586432E5) (tstamp c327ccf9-7c50-4eed-b404-de289a6043d7)
+    (tstamp c327ccf9-7c50-4eed-b404-de289a6043d7)
     (at 188.309 100.838 -90)
     (descr "Diode SMA (DO-214AC)")
     (tags "Diode SMA (DO-214AC)")
@@ -1354,7 +1354,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp cab9d3f3-ba3f-4024-b3d6-87696cb91a7a)
+    (tstamp cab9d3f3-ba3f-4024-b3d6-87696cb91a7a)
     (at 194.356354 100.167 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1406,7 +1406,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp d0be2824-7682-4322-a3ec-990b6d40fda4)
+    (tstamp d0be2824-7682-4322-a3ec-990b6d40fda4)
     (at 147.574 100.457 -90)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1458,7 +1458,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp d236cff0-fa8f-422d-9229-ee9263b5a2b9)
+    (tstamp d236cff0-fa8f-422d-9229-ee9263b5a2b9)
     (at 129.459354 97.294 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1510,7 +1510,7 @@
   )
 
   (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm" (layer "F.Cu")
-    (tedit 61C9202D) (tstamp d9f01561-ce12-48ab-97ac-6d4a84a2d7fe)
+    (tstamp d9f01561-ce12-48ab-97ac-6d4a84a2d7fe)
     (at 181.2925 98.933 -90)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -1600,7 +1600,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp e7892132-b049-43e8-99b7-a31a4b387b65)
+    (tstamp e7892132-b049-43e8-99b7-a31a4b387b65)
     (at 167.051354 97.294 180)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1652,7 +1652,7 @@
   )
 
   (footprint "mio:Small_7_Seg_FlipDot_Module" (layer "F.Cu")
-    (tedit 61DA61F0) (tstamp ea3739a1-80ee-4de0-940c-f36085213170)
+    (tstamp ea3739a1-80ee-4de0-940c-f36085213170)
     (at 173.482 116.205)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -1744,7 +1744,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "F.Cu")
-    (tedit 6211D4C9) (tstamp f226d0fa-6fa6-4f46-99cf-6860d539dd2c)
+    (tstamp f226d0fa-6fa6-4f46-99cf-6860d539dd2c)
     (at 203.2 115.57)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -1772,7 +1772,7 @@
   )
 
   (footprint "Diode_SMD:D_SMA" (layer "F.Cu")
-    (tedit 586432E5) (tstamp f7cfc525-ae2c-42b7-84a3-3d634afe5265)
+    (tstamp f7cfc525-ae2c-42b7-84a3-3d634afe5265)
     (at 161.004 100.838 -90)
     (descr "Diode SMA (DO-214AC)")
     (tags "Diode SMA (DO-214AC)")
@@ -1838,7 +1838,7 @@
   )
 
   (footprint "Capacitor_SMD:C_1206_3216Metric" (layer "F.Cu")
-    (tedit 5F68FEEE) (tstamp fce2465c-ef14-42f6-8908-bbef58cac97f)
+    (tstamp fce2465c-ef14-42f6-8908-bbef58cac97f)
     (at 109.982 100.457 -90)
     (descr "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
     (tags "capacitor")
@@ -1890,7 +1890,7 @@
   )
 
   (footprint "mio:SLC03B-05" (layer "B.Cu")
-    (tedit 617E6585) (tstamp 00000000-0000-0000-0000-0000618b52d1)
+    (tstamp 00000000-0000-0000-0000-0000618b52d1)
     (at 136.0805 107.2515 90)
     (property "Sheetfile" "flip_dot_clock.kicad_sch")
     (property "Sheetname" "")
@@ -1940,7 +1940,7 @@
   )
 
   (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm" (layer "B.Cu")
-    (tedit 5AE50EF1) (tstamp 00000000-0000-0000-0000-000061ca1b23)
+    (tstamp 00000000-0000-0000-0000-000061ca1b23)
     (at 99.6315 102.87)
     (descr "CP, Radial series, Radial, pin pitch=5.00mm, , diameter=10mm, Electrolytic Capacitor")
     (tags "CP Radial series Radial pin pitch 5.00mm  diameter 10mm Electrolytic Capacitor")
@@ -2366,7 +2366,7 @@
   )
 
   (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm" (layer "B.Cu")
-    (tedit 5AE50EF1) (tstamp 013e877b-a5b8-45e0-93d3-1eb132a521e7)
+    (tstamp 013e877b-a5b8-45e0-93d3-1eb132a521e7)
     (at 191.8335 102.87)
     (descr "CP, Radial series, Radial, pin pitch=5.00mm, , diameter=10mm, Electrolytic Capacitor")
     (tags "CP Radial series Radial pin pitch 5.00mm  diameter 10mm Electrolytic Capacitor")
@@ -2792,7 +2792,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "B.Cu")
-    (tedit 6211D4C9) (tstamp 040091b6-3b41-4388-823e-3e4bb29961ad)
+    (tstamp 040091b6-3b41-4388-823e-3e4bb29961ad)
     (at 196.723 83.312 180)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -2830,7 +2830,7 @@
   )
 
   (footprint "Connector_Molex:Molex_Nano-Fit_105309-xx05_1x05_P2.50mm_Vertical" (layer "B.Cu")
-    (tedit 5B7830BB) (tstamp 0b67ca7d-68c6-41f4-b0ab-71275ae8d270)
+    (tstamp 0b67ca7d-68c6-41f4-b0ab-71275ae8d270)
     (at 113.839 83.693 90)
     (descr "Molex Nano-Fit Power Connectors, 105309-xx05, 5 Pins per row (http://www.molex.com/pdm_docs/sd/1053091203_sd.pdf), generated with kicad-footprint-generator")
     (tags "connector Molex Nano-Fit side entry")
@@ -2945,7 +2945,7 @@
   )
 
   (footprint "Connector_PinSocket_2.54mm:PinSocket_2x10_P2.54mm_Vertical" (layer "B.Cu")
-    (tedit 5A19A427) (tstamp 0caf9df6-1bd4-4f0a-815a-d3688c857cfe)
+    (tstamp 0caf9df6-1bd4-4f0a-815a-d3688c857cfe)
     (at 160.909 86.233 -90)
     (descr "Through hole straight socket strip, 2x10, 2.54mm pitch, double cols (from Kicad 4.0.7), script generated")
     (tags "Through hole socket strip THT 2x10 2.54mm double row")
@@ -3052,7 +3052,7 @@
   )
 
   (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm" (layer "B.Cu")
-    (tedit 5AE50EF1) (tstamp 7cae32de-34a2-42eb-af7f-7483004017e4)
+    (tstamp 7cae32de-34a2-42eb-af7f-7483004017e4)
     (at 164.5285 102.87)
     (descr "CP, Radial series, Radial, pin pitch=5.00mm, , diameter=10mm, Electrolytic Capacitor")
     (tags "CP Radial series Radial pin pitch 5.00mm  diameter 10mm Electrolytic Capacitor")
@@ -3478,7 +3478,7 @@
   )
 
   (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm" (layer "B.Cu")
-    (tedit 5AE50EF1) (tstamp 8bf5e70c-5ca7-41aa-bec4-8143559165c4)
+    (tstamp 8bf5e70c-5ca7-41aa-bec4-8143559165c4)
     (at 126.9365 102.87)
     (descr "CP, Radial series, Radial, pin pitch=5.00mm, , diameter=10mm, Electrolytic Capacitor")
     (tags "CP Radial series Radial pin pitch 5.00mm  diameter 10mm Electrolytic Capacitor")
@@ -3904,7 +3904,7 @@
   )
 
   (footprint "Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical" (layer "B.Cu")
-    (tedit 5CA3843E) (tstamp b5287042-dfd1-49f8-b044-118e611b15b0)
+    (tstamp b5287042-dfd1-49f8-b044-118e611b15b0)
     (at 138.557 113.284)
     (descr "Molex Micro-Fit 3.0 Connector System, 43650-0215 (compatible alternatives: 43650-0216, 43650-0217), 2 Pins per row (http://www.molex.com/pdm_docs/sd/436500215_sd.pdf), generated with kicad-footprint-generator")
     (tags "connector Molex Micro-Fit_3.0 vertical")
@@ -3992,7 +3992,7 @@
   )
 
   (footprint "mio:MountingHole_3.2mm_M3" (layer "B.Cu")
-    (tedit 6211D4C9) (tstamp f7024204-2535-4bf3-9771-78594da79847)
+    (tstamp f7024204-2535-4bf3-9771-78594da79847)
     (at 132.207 86.36 180)
     (descr "Mounting Hole 3.2mm, no annular, M3")
     (tags "mounting hole 3.2mm no annular m3")
@@ -4564,7 +4564,7 @@
   (zone (net 6) (net_name "GND") (layer "F.Cu") (tstamp 6167ac01-a97a-4a6f-b811-bc0a02b4630c) (hatch edge 0.508)
     (connect_pads (clearance 0.254))
     (min_thickness 0.2032) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 2) (island_area_min 10))
     (polygon
       (pts
         (xy 205.613 117.983)
@@ -18163,7 +18163,7 @@
   (zone (net 5) (net_name "+5V") (layer "In1.Cu") (tstamp 08441e85-8d59-4357-b023-a8757ac51a12) (hatch edge 0.508)
     (connect_pads (clearance 0.508))
     (min_thickness 0.254) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 2) (island_area_min 10))
     (polygon
       (pts
         (xy 205.613 80.899)
@@ -21671,7 +21671,7 @@
   (zone (net 11) (net_name "+24V") (layer "In1.Cu") (tstamp 32c8ffae-5df2-4183-8698-c7c2037ffca3) (hatch edge 0.508)
     (connect_pads (clearance 0.508))
     (min_thickness 0.254) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 2) (island_area_min 10))
     (polygon
       (pts
         (xy 205.613 117.983)
@@ -26736,7 +26736,7 @@
   (zone (net 6) (net_name "GND") (layer "In2.Cu") (tstamp 015abf06-f2a5-45f5-98fc-5ce641fe7179) (hatch edge 0.508)
     (connect_pads (clearance 0.3048))
     (min_thickness 0.254) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 2) (island_area_min 10))
     (polygon
       (pts
         (xy 205.613 117.983)
@@ -35292,7 +35292,7 @@
   (zone (net 6) (net_name "GND") (layer "B.Cu") (tstamp 4f6c6eb1-5b9e-44f8-b4b7-32f394bd4393) (hatch edge 0.508)
     (connect_pads (clearance 0.508))
     (min_thickness 0.254) (filled_areas_thickness no)
-    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (fill yes (thermal_gap 0.508) (thermal_bridge_width 0.508) (island_removal_mode 2) (island_area_min 10))
     (polygon
       (pts
         (xy 205.613 117.983)
