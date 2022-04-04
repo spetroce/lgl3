@@ -86,6 +86,13 @@
 #define NCV7719_HBCNF1 0x0002
 
 #define NUM_DISPLAY 4
+
+#define SET_GPIO(port, pin) port->BSRR = pin;
+#define RESET_GPIO(port, pin) port->BRR = pin;
+/// Evaluates as true if a GPIO output is set
+#define GPIO_IS_SET(port, pin) (port->ODR & pin)
+/// Evaluates as true if a GPIO input is set
+#define READ_GPIO(port, pin) (port->IDR & pin)
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -97,6 +104,14 @@ uint8_t g_disp_idx[TX_DATA_MAX_LEN];
 uint32_t g_tx_data_write_idx = 0,
          g_tx_data_read_idx = 0,
          g_tx_data_len = 0;
+GPIO_TypeDef * g_ncv_en_gpio_port[] = {NCV_EN_1_GPIO_Port,
+                                       NCV_EN_2_GPIO_Port,
+                                       NCV_EN_3_GPIO_Port,
+                                       NCV_EN_4_GPIO_Port};
+uint16_t g_ncv_en_gpio_pin[] = {NCV_EN_1_Pin,
+                                NCV_EN_2_Pin,
+                                NCV_EN_3_Pin,
+                                NCV_EN_4_Pin};
 /*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
 uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
         g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
@@ -181,29 +196,28 @@ bool TxDataPop(uint32_t * tx_data, uint8_t * disp_idx) {
   return false;
 }
 
-// GPIO_PIN_SET = enable
-// GPIO_PIN_RESET = disable
-// returns true if pin_state was already the current setting
-bool EnableDispDriver(const GPIO_PinState pin_state) {
-  if (HAL_GPIO_ReadPin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin) == pin_state) {
+bool TxDataNextDispIdx(uint8_t * disp_idx) {
+  if (g_tx_data_len > 0) {
+    *disp_idx = g_disp_idx[g_tx_data_read_idx];
     return true;
-  } else {
-    HAL_GPIO_WritePin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin, pin_state);
   }
   return false;
 }
 
 void SpiTransmit32() {
-  if (TxDataLen() == 0) {
-    EnableDispDriver(GPIO_PIN_RESET);
-    return;
-  }
-  if (!EnableDispDriver(GPIO_PIN_SET)) {
-    return;
-  }
   uint32_t tx_data;
   uint8_t disp_idx;
   TxDataPop(&tx_data, &disp_idx);
+  if (disp_idx >= NUM_DISPLAY) {
+    return;
+  }
+  if (tx_data == UINT32_MAX) {
+    SET_GPIO(g_ncv_en_gpio_port[disp_idx], g_ncv_en_gpio_pin[disp_idx]);
+    return;
+  } else if (tx_data == 0) {
+    RESET_GPIO(g_ncv_en_gpio_port[disp_idx], g_ncv_en_gpio_pin[disp_idx]);
+    return;
+  }
   const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
   tx_data |= ncv7719_hbsel;
   uint16_t * tx_data_word = (uint16_t*)&tx_data;
@@ -232,22 +246,26 @@ void HideAllSegment(const uint8_t disp_idx) {
   if (disp_idx >= NUM_DISPLAY) {
     return;
   }
+  TxDataPush(UINT32_MAX, disp_idx);
   //                  ae    AE0   fdgxbcFDGXBC0
   TxDataPush(0b00000001000001000000001100001000, disp_idx);
   TxDataPush(0b00000000000000000000101010001000, disp_idx);
   TxDataPush(0b00000000100000000001001000001000, disp_idx);
   TxDataPush(0b00000000000000000000011000001000, disp_idx);
+  TxDataPush(0, disp_idx);
 }
 
 void ShowAllSegment(const uint8_t disp_idx) {
   if (disp_idx >= NUM_DISPLAY) {
     return;
   }
+  TxDataPush(UINT32_MAX, disp_idx);
   //                  ae    AE0   fdgxbcFDGXBC0
   TxDataPush(0b00000001000001000000001100000100, disp_idx);
   TxDataPush(0b00000000000000000000101010100010, disp_idx);
   TxDataPush(0b00000000100000100001001001000000, disp_idx);
   TxDataPush(0b00000000000000000000011000010000, disp_idx);
+  TxDataPush(0, disp_idx);
 }
 
 void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
@@ -334,6 +352,7 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   if (k % MAX_SIMULTANEOUS_SEG != 0) {
     ++bits_to_turn_off_len;
   }
+  TxDataPush(UINT32_MAX, disp_idx);
   for (i = 0; i < bits_to_turn_on_len; ++i) {
     const uint32_t bits_to_turn_on_en = bits_to_turn_on[i] << 6;
     TxDataPush(bits_to_turn_on[i] | bits_to_turn_on_en | reset_pin_bit_en, disp_idx);
@@ -342,6 +361,7 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
     const uint32_t bits_to_turn_off_en = bits_to_turn_off[i] << 6;
     TxDataPush(bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en, disp_idx);
   }
+  TxDataPush(0, disp_idx);
   g_ncv_current_digit[disp_idx] = next_digit;
   g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
 }
@@ -390,20 +410,22 @@ int main(void)
   HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
   // g_tim_transmit_spi frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
-                 LED_BLINK_PERIOD = 2000;  // 1 sec
+                 LED_BLINK_PERIOD = 500;  // 0.250 sec
   const uint32_t LED_ON_START_COUNT = LED_BLINK_PERIOD - LED_ON_DURATION;
   uint32_t led_blink_count = 0;
   bool first_tim_call_set_digit = true;
   uint8_t disp_idx = 0,
           next_digit[NUM_DISPLAY] = {9, 9, 9, 9};
   bool is_init = false;
-  uint8_t curr_func = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   HAL_Delay(10);
-  SetDigit(disp_idx, 10);
+  int i;
+  for (i = 0; i < NUM_DISPLAY; ++i) {
+    SetDigit(i, 10);
+  }
   while (1)
   {
     /* USER CODE END WHILE */
@@ -424,27 +446,21 @@ int main(void)
     } else if (led_blink_count == LED_BLINK_PERIOD) {
       HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
       led_blink_count = 0;
-      if (true) {
-        if (!is_init) {
-          is_init = true;
-          SetDigit(disp_idx, 11);
-        } else {
-          next_digit[disp_idx] += 1;
-          if (next_digit[disp_idx] > 9) {
-            next_digit[disp_idx] = 0;
-          }
-          SetDigit(disp_idx, next_digit[disp_idx]);
+      if (!is_init) {
+        is_init = true;
+        for (i = 0; i < NUM_DISPLAY; ++i) {
+          SetDigit(i, 11);
         }
       } else {
-        if (curr_func > 1) {
-          curr_func = 0;
+        next_digit[disp_idx] += 1;
+        if (next_digit[disp_idx] > 9) {
+          next_digit[disp_idx] = 0;
         }
-        if (curr_func == 0) {
-          SetDigit(disp_idx, 10);
-        } else if (curr_func == 1) {
-          SetDigit(disp_idx, 11);
+        SetDigit(disp_idx, next_digit[disp_idx]);
+        ++disp_idx;
+        if (disp_idx >= NUM_DISPLAY) {
+          disp_idx = 0;
         }
-        ++curr_func;
       }
     }
   }
