@@ -1,12 +1,13 @@
 Configuration	flip_dot_clock
 STM32CubeMX 	6.5.0
-Date	03/20/2022
+Date	04/05/2022
 MCU	STM32F303K8Tx
 
 
 
 PERIPHERALS	MODES	FUNCTIONS	PINS
 RCC	BYPASS Clock Source	RCC_OSC_IN	PF0 / OSC_IN
+RTC	Activate RTC Clock Source	RTC_VS_RTC_Activate	VP_RTC_VS_RTC_Activate
 SPI1	Full-Duplex Master	SPI1_MISO	PA6
 SPI1	Full-Duplex Master	SPI1_MOSI	PA7
 SPI1	Full-Duplex Master	SPI1_SCK	PA5
@@ -44,6 +45,7 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 30	PB7	GPIO_Output	NCV_EN_1 [D4]
 PERIPHERALS	MODES	FUNCTIONS	PINS
 RCC	BYPASS Clock Source	RCC_OSC_IN	PF0 / OSC_IN
+RTC	Activate RTC Clock Source	RTC_VS_RTC_Activate	VP_RTC_VS_RTC_Activate
 SPI1	Full-Duplex Master	SPI1_MISO	PA6
 SPI1	Full-Duplex Master	SPI1_MOSI	PA7
 SPI1	Full-Duplex Master	SPI1_SCK	PA5

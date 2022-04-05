@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "rtc.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -87,6 +88,13 @@
 
 #define NUM_DISPLAY 4
 
+/// SpiTransmit32() has a special interpretation for the value ENABLE_NCV_DRV,
+/// which is to enable an NCV driver chip GPIO.
+#define ENABLE_NCV_DRV  0xFFFFFFF
+/// SpiTransmit32() has a special interpretation for the value DISABLE_NCV_DRV,
+/// which is to disable an NCV driver chip GPIO.
+#define DISABLE_NCV_DRV 0x7FFFFFF
+
 #define SET_GPIO(port, pin) port->BSRR = pin;
 #define RESET_GPIO(port, pin) port->BRR = pin;
 /// Evaluates as true if a GPIO output is set
@@ -104,14 +112,6 @@ uint8_t g_disp_idx[TX_DATA_MAX_LEN];
 uint32_t g_tx_data_write_idx = 0,
          g_tx_data_read_idx = 0,
          g_tx_data_len = 0;
-GPIO_TypeDef * g_ncv_en_gpio_port[] = {NCV_EN_1_GPIO_Port,
-                                       NCV_EN_2_GPIO_Port,
-                                       NCV_EN_3_GPIO_Port,
-                                       NCV_EN_4_GPIO_Port};
-uint16_t g_ncv_en_gpio_pin[] = {NCV_EN_1_Pin,
-                                NCV_EN_2_Pin,
-                                NCV_EN_3_Pin,
-                                NCV_EN_4_Pin};
 /*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
 uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
         g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
@@ -211,35 +211,52 @@ void SpiTransmit32() {
   if (disp_idx >= NUM_DISPLAY) {
     return;
   }
-  if (tx_data == UINT32_MAX) {
-    SET_GPIO(g_ncv_en_gpio_port[disp_idx], g_ncv_en_gpio_pin[disp_idx]);
+  GPIO_TypeDef * ncv_en_gpio_port[] = {NCV_EN_1_GPIO_Port,
+                                       NCV_EN_2_GPIO_Port,
+                                       NCV_EN_3_GPIO_Port,
+                                       NCV_EN_4_GPIO_Port};
+  uint16_t ncv_en_gpio_pin[] = {NCV_EN_1_Pin,
+                                NCV_EN_2_Pin,
+                                NCV_EN_3_Pin,
+                                NCV_EN_4_Pin};
+  if (tx_data == ENABLE_NCV_DRV) {
+    SET_GPIO(ncv_en_gpio_port[disp_idx], ncv_en_gpio_pin[disp_idx]);
     return;
-  } else if (tx_data == 0) {
-    RESET_GPIO(g_ncv_en_gpio_port[disp_idx], g_ncv_en_gpio_pin[disp_idx]);
+  } else if (tx_data == DISABLE_NCV_DRV) {
+    RESET_GPIO(ncv_en_gpio_port[disp_idx], ncv_en_gpio_pin[disp_idx]);
     return;
   }
-  const uint32_t ncv7719_hbsel = NCV7719_HBSEL << 16;
-  tx_data |= ncv7719_hbsel;
-  uint16_t * tx_data_word = (uint16_t*)&tx_data;
-  GPIO_TypeDef * gpio_port[] = {SPI1_CS_1_GPIO_Port, SPI1_CS_2_GPIO_Port, SPI1_CS_3_GPIO_Port, SPI1_CS_4_GPIO_Port};
-  uint16_t gpio_pin[] = {SPI1_CS_1_Pin, SPI1_CS_2_Pin, SPI1_CS_3_Pin, SPI1_CS_4_Pin};
+  uint16_t tx_data_word[2];
+  tx_data_word[0] = (uint16_t)(tx_data & 0xFFFFUL);
+  tx_data_word[1] = (uint16_t)((tx_data >> 16) & 0xFFFFUL);
+  // Set the NCV7719_HBSEL bit for the second word.
+  tx_data_word[1] |= NCV7719_HBSEL;
+  GPIO_TypeDef * spi_cs_gpio_port[] = {SPI1_CS_1_GPIO_Port,
+                                       SPI1_CS_2_GPIO_Port,
+                                       SPI1_CS_3_GPIO_Port,
+                                       SPI1_CS_4_GPIO_Port};
+  uint16_t spi_cs_gpio_pin[] = {SPI1_CS_1_Pin,
+                                SPI1_CS_2_Pin,
+                                SPI1_CS_3_Pin,
+                                SPI1_CS_4_Pin};
   // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
+  RESET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
   LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
-  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
+  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
   // Wait for transmit to complete
   while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
-  // Need minimum 5 microsecond wait here between CSB toggle
+  SET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
+  // Need minimum 5 microsecond wait here between CSB toggle. This empty loop
+  // with 30 iterations makes a ~5.5 microsecond delay.
   int i;
-  for (i = 0; i < 25; ++i) { }
+  for (i = 0; i < 30; ++i) { }
   // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_RESET);
+  RESET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
   LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
-  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
+  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
   // Wait for SPI transmit to complete
   while (SPI1->SR & SPI_SR_BSY);
-  HAL_GPIO_WritePin(gpio_port[disp_idx], gpio_pin[disp_idx], GPIO_PIN_SET);
+  SET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
 }
 
 void HideAllSegment(const uint8_t disp_idx) {
@@ -352,16 +369,19 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   if (k % MAX_SIMULTANEOUS_SEG != 0) {
     ++bits_to_turn_off_len;
   }
-  TxDataPush(UINT32_MAX, disp_idx);
+  TxDataPush(ENABLE_NCV_DRV, disp_idx);
   for (i = 0; i < bits_to_turn_on_len; ++i) {
     const uint32_t bits_to_turn_on_en = bits_to_turn_on[i] << 6;
-    TxDataPush(bits_to_turn_on[i] | bits_to_turn_on_en | reset_pin_bit_en, disp_idx);
+    TxDataPush(bits_to_turn_on[i] | bits_to_turn_on_en | reset_pin_bit_en,
+               disp_idx);
   }
   for (i = 0; i < bits_to_turn_off_len; ++i) {
     const uint32_t bits_to_turn_off_en = bits_to_turn_off[i] << 6;
-    TxDataPush(bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en, disp_idx);
+    TxDataPush(bits_to_turn_off_en | reset_pin_bit_cfg_on | reset_pin_bit_en,
+               disp_idx);
   }
-  TxDataPush(0, disp_idx);
+  TxDataPush(0, disp_idx);  // Disable all the outputs 
+  TxDataPush(DISABLE_NCV_DRV, disp_idx);
   g_ncv_current_digit[disp_idx] = next_digit;
   g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
 }
@@ -398,16 +418,12 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM6_Init();
   MX_USART2_UART_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(NCV_EN_1_GPIO_Port, NCV_EN_1_Pin, GPIO_PIN_RESET);
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
   if (!LL_SPI_IsEnabled(SPI1)) {
     LL_SPI_Enable(SPI1);
   }
-  // Send test SPI message (this also makes the clock default state low, which
-  // is good for the doing logic analyzer work).
-  LL_SPI_TransmitData16(SPI1, 0xBEEF);
-  HAL_GPIO_WritePin(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin, GPIO_PIN_RESET);
   // g_tim_transmit_spi frequency is 2000 Hz
   const uint32_t LED_ON_DURATION = 100,  // 50 ms
                  LED_BLINK_PERIOD = 500;  // 0.250 sec
@@ -421,6 +437,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  // Send test SPI message (this also makes the clock default state low, which
+  // is good for the doing logic analyzer work).
+  LL_SPI_TransmitData16(SPI1, 0xBEEF);
+  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
   HAL_Delay(10);
   int i;
   for (i = 0; i < NUM_DISPLAY; ++i) {
@@ -442,9 +462,9 @@ int main(void)
     }
     // Blink Status LED
     if (led_blink_count == LED_ON_START_COUNT) {
-      HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+      SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
     } else if (led_blink_count == LED_BLINK_PERIOD) {
-      HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+      RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
       led_blink_count = 0;
       if (!is_init) {
         is_init = true;
@@ -475,13 +495,15 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
@@ -500,6 +522,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
