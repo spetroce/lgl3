@@ -403,7 +403,9 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
 
 // Call at 100 Hz
 void UpdateButtonState() {
-  const uint8_t MAX_SUM = 5;  // 50 milliseconds
+  const uint8_t MAX_SUM = 5,  // 50 milliseconds
+                BUTTON_SCAN_START = 50,  // 500 milliseconds
+                BUTTON_SCAN_REPEAT = 15;  // 150 milliseconds
   GPIO_TypeDef * button_gpio_port[NUM_BUTTON] = {HOUR_UP_GPIO_Port,
                                                  HOUR_DOWN_GPIO_Port,
                                                  MIN_UP_GPIO_Port,
@@ -424,7 +426,6 @@ void UpdateButtonState() {
         g_button_scan[i] = false;
         g_button_scan_start_count[i] = 0;
         g_button_scan_repeat_count[i] = 0;
-        // if (i == 0) { RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
       }
     } else {
       if (g_button_sum[i] < MAX_SUM) {
@@ -436,15 +437,16 @@ void UpdateButtonState() {
         if (g_button_scan[i]) {
           g_button_scan_repeat_count[i] += 1;
         }
-        if (!g_button_last_state[i] || (g_button_scan[i] && g_button_scan_repeat_count[i] == 15)) {
+        if (!g_button_last_state[i] ||
+            (g_button_scan[i] &&
+             g_button_scan_repeat_count[i] == BUTTON_SCAN_REPEAT)) {
           g_button_scan_repeat_count[i] = 0;
           g_button_last_state[i] = true;
           g_button_state[i] = true;
-          // if (i == 0) { SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
         }
-        if (g_button_scan_start_count[i] < 50) {
+        if (g_button_scan_start_count[i] < BUTTON_SCAN_START) {
           g_button_scan_start_count[i] += 1;
-          if (g_button_scan_start_count[i] == 50) {
+          if (g_button_scan_start_count[i] == BUTTON_SCAN_START) {
             g_button_scan[i] = true;
             g_button_state[i] = true;
           }
