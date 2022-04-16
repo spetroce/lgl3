@@ -109,13 +109,16 @@
 /* USER CODE BEGIN PV */
 #define TX_DATA_MAX_LEN 64
 uint8_t g_disp_idx[TX_DATA_MAX_LEN],
-        g_button_sum[NUM_BUTTON] = {0};
+        g_button_sum[NUM_BUTTON] = {0},
+        g_button_scan_start_count[NUM_BUTTON] = {0},
+        g_button_scan_repeat_count[NUM_BUTTON] = {0};
 uint32_t g_tx_data[TX_DATA_MAX_LEN],
          g_tx_data_write_idx = 0,
          g_tx_data_read_idx = 0,
          g_tx_data_len = 0;
 bool g_button_last_state[NUM_BUTTON] = {false},
-     g_button_state[NUM_BUTTON] = {false};
+     g_button_state[NUM_BUTTON] = {false},
+     g_button_scan[NUM_BUTTON] = {false};
 /*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
 uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
         g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
@@ -418,6 +421,9 @@ void UpdateButtonState() {
       }
       if (g_button_sum[i] == 0) {
         g_button_last_state[i] = false;
+        g_button_scan[i] = false;
+        g_button_scan_start_count[i] = 0;
+        g_button_scan_repeat_count[i] = 0;
         // if (i == 0) { RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
       }
     } else {
@@ -426,10 +432,23 @@ void UpdateButtonState() {
       }
       // Besides the first button press, g_button_sum[] must hit zero for the
       // button state to be true again.
-      if (g_button_sum[i] == MAX_SUM && !g_button_last_state[i]) {
-        g_button_last_state[i] = true;
-        g_button_state[i] = true;
-        // if (i == 0) { SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
+      if (g_button_sum[i] == MAX_SUM) {
+        if (g_button_scan[i]) {
+          g_button_scan_repeat_count[i] += 1;
+        }
+        if (!g_button_last_state[i] || (g_button_scan[i] && g_button_scan_repeat_count[i] == 15)) {
+          g_button_scan_repeat_count[i] = 0;
+          g_button_last_state[i] = true;
+          g_button_state[i] = true;
+          // if (i == 0) { SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
+        }
+        if (g_button_scan_start_count[i] < 50) {
+          g_button_scan_start_count[i] += 1;
+          if (g_button_scan_start_count[i] == 50) {
+            g_button_scan[i] = true;
+            g_button_state[i] = true;
+          }
+        }
       }
     }
   }
