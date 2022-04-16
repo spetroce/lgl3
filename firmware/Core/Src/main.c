@@ -87,6 +87,7 @@
 #define NCV7719_HBCNF1 0x0002
 
 #define NUM_DISPLAY 4
+#define NUM_BUTTON 4
 
 /// SpiTransmit32() has a special interpretation for the value ENABLE_NCV_DRV,
 /// which is to enable an NCV driver chip GPIO.
@@ -107,11 +108,14 @@
 
 /* USER CODE BEGIN PV */
 #define TX_DATA_MAX_LEN 64
-uint32_t g_tx_data[TX_DATA_MAX_LEN];
-uint8_t g_disp_idx[TX_DATA_MAX_LEN];
-uint32_t g_tx_data_write_idx = 0,
+uint8_t g_disp_idx[TX_DATA_MAX_LEN],
+        g_button_sum[NUM_BUTTON] = {0};
+uint32_t g_tx_data[TX_DATA_MAX_LEN],
+         g_tx_data_write_idx = 0,
          g_tx_data_read_idx = 0,
          g_tx_data_len = 0;
+bool g_button_last_state[NUM_BUTTON] = {false},
+     g_button_state[NUM_BUTTON] = {false};
 /*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
 uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
         g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
@@ -174,6 +178,7 @@ uint32_t TxDataLen() {
   return g_tx_data_len;
 }
 
+
 void TxDataPush(const uint32_t data, const uint8_t disp_idx) {
   g_tx_data[g_tx_data_write_idx] = data;
   g_disp_idx[g_tx_data_write_idx] = disp_idx;
@@ -182,6 +187,7 @@ void TxDataPush(const uint32_t data, const uint8_t disp_idx) {
   }
   ++g_tx_data_len;  // TODO: can overflow
 }
+
 
 bool TxDataPop(uint32_t * tx_data, uint8_t * disp_idx) {
   if (g_tx_data_len > 0) {
@@ -196,6 +202,7 @@ bool TxDataPop(uint32_t * tx_data, uint8_t * disp_idx) {
   return false;
 }
 
+
 bool TxDataNextDispIdx(uint8_t * disp_idx) {
   if (g_tx_data_len > 0) {
     *disp_idx = g_disp_idx[g_tx_data_read_idx];
@@ -203,6 +210,7 @@ bool TxDataNextDispIdx(uint8_t * disp_idx) {
   }
   return false;
 }
+
 
 void SpiTransmit32() {
   uint32_t tx_data;
@@ -259,6 +267,7 @@ void SpiTransmit32() {
   SET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
 }
 
+
 void HideAllSegment(const uint8_t disp_idx) {
   if (disp_idx >= NUM_DISPLAY) {
     return;
@@ -271,6 +280,7 @@ void HideAllSegment(const uint8_t disp_idx) {
   TxDataPush(0b00000000000000000000011000001000, disp_idx);
   TxDataPush(0, disp_idx);
 }
+
 
 void ShowAllSegment(const uint8_t disp_idx) {
   if (disp_idx >= NUM_DISPLAY) {
@@ -285,6 +295,7 @@ void ShowAllSegment(const uint8_t disp_idx) {
   TxDataPush(0, disp_idx);
 }
 
+
 void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   if (disp_idx >= NUM_DISPLAY) {
     return;
@@ -294,7 +305,7 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   // If g_ncv_next_digit[disp_idx] is a valid value, this means we are currently
   // working on setting that value and will not change to a different value (ie.
   // a new next_digit) until g_ncv_next_digit[disp_idx] is not a valid value. On
-  // boot up, all displays are initialized to digit 'n' (see above notes).
+  // boot up, all displays are initialized to digit 11 (see digit_cfg).
   if (g_ncv_next_digit[disp_idx] < DIGIT_CFG_ARRAY_LEN) {
     next_digit = g_ncv_next_digit[disp_idx];
   } else {
@@ -385,6 +396,54 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   g_ncv_current_digit[disp_idx] = next_digit;
   g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
 }
+
+
+// Call at 100 Hz
+void UpdateButtonState() {
+  const uint8_t MAX_SUM = 5;  // 50 milliseconds
+  GPIO_TypeDef * button_gpio_port[NUM_BUTTON] = {HOUR_UP_GPIO_Port,
+                                                 HOUR_DOWN_GPIO_Port,
+                                                 MIN_UP_GPIO_Port,
+                                                 MIN_DOWN_GPIO_Port};
+  uint16_t button_gpio_pin[NUM_BUTTON] = {HOUR_UP_Pin,
+                                          HOUR_DOWN_Pin,
+                                          MIN_UP_Pin,
+                                          MIN_DOWN_Pin};
+  int i = 0;
+  for (i = 0; i < NUM_BUTTON; ++i) {
+    // High is button released, Low is button pressed.
+    if (READ_GPIO(button_gpio_port[i], button_gpio_pin[i])) {
+      if (g_button_sum[i] > 0) {
+        g_button_sum[i] -= 1;
+      }
+      if (g_button_sum[i] == 0) {
+        g_button_last_state[i] = false;
+        // if (i == 0) { RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
+      }
+    } else {
+      if (g_button_sum[i] < MAX_SUM) {
+        g_button_sum[i] += 1;
+      }
+      // Besides the first button press, g_button_sum[] must hit zero for the
+      // button state to be true again.
+      if (g_button_sum[i] == MAX_SUM && !g_button_last_state[i]) {
+        g_button_last_state[i] = true;
+        g_button_state[i] = true;
+        // if (i == 0) { SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin) }
+      }
+    }
+  }
+}
+
+
+bool ButtonState(const uint8_t button_index) {
+  if (g_button_state[button_index]) {
+    g_button_state[button_index] = false;
+    return true;
+  }
+  return false;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -424,15 +483,18 @@ int main(void)
   if (!LL_SPI_IsEnabled(SPI1)) {
     LL_SPI_Enable(SPI1);
   }
-  // g_tim_transmit_spi frequency is 2000 Hz
-  const uint32_t LED_ON_DURATION = 100,  // 50 ms
-                 LED_BLINK_PERIOD = 500;  // 0.250 sec
-  const uint32_t LED_ON_START_COUNT = LED_BLINK_PERIOD - LED_ON_DURATION;
-  uint32_t led_blink_count = 0;
   bool first_tim_call_set_digit = true;
   uint8_t disp_idx = 0,
-          next_digit[NUM_DISPLAY] = {9, 9, 9, 9};
+          next_digit[NUM_DISPLAY] = {0, 0, 0, 0};
+  // g_tim_transmit_spi frequency is 2000 Hz
+  const uint32_t INIT_PERIOD = 125;  // 0.125 second
   bool is_init = false;
+  uint32_t init_step = 0,
+           init_period_count = 0,
+           update_button_count = 0;
+  const uint32_t LED_ON_DURATION = 100,  // 50 ms
+                 LED_BLINK_PERIOD = 2000;  // 1 sec
+  uint32_t led_blink_count = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -442,10 +504,6 @@ int main(void)
   LL_SPI_TransmitData16(SPI1, 0xBEEF);
   RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
   HAL_Delay(10);
-  int i;
-  for (i = 0; i < NUM_DISPLAY; ++i) {
-    SetDigit(i, 10);
-  }
   while (1)
   {
     /* USER CODE END WHILE */
@@ -458,30 +516,65 @@ int main(void)
       } else {
         SpiTransmit32();
       }
+      ++init_period_count;
       ++led_blink_count;
+      ++update_button_count;
+      if (update_button_count >= 20) {
+        update_button_count = 0;
+        UpdateButtonState();  // Runs at 100 Hz
+      }
     }
-    // Blink Status LED
-    if (led_blink_count == LED_ON_START_COUNT) {
-      SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
-    } else if (led_blink_count == LED_BLINK_PERIOD) {
-      RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
-      led_blink_count = 0;
-      if (!is_init) {
-        is_init = true;
+    // Run Init Routine
+    if (!is_init && init_period_count == INIT_PERIOD) {
+      init_period_count = 0;
+      int i;
+      if (init_step == 0) {
+        // Show all segments
+        for (i = 0; i < NUM_DISPLAY; ++i) {
+          SetDigit(i, 10);
+        }
+      } else if (init_step == 16) {
+        // Hide all segments
         for (i = 0; i < NUM_DISPLAY; ++i) {
           SetDigit(i, 11);
         }
-      } else {
-        next_digit[disp_idx] += 1;
-        if (next_digit[disp_idx] > 9) {
-          next_digit[disp_idx] = 0;
+      } else if (init_step >= 32) {
+        // Cycle through all numbers and then stop with all digits on zero
+        if (disp_idx == 0 && next_digit[disp_idx] == 10) {
+          for (i = 0; i < NUM_DISPLAY; ++i) {
+            next_digit[i] = 0;
+            SetDigit(i, next_digit[i]);
+          }
+          is_init = true;
+          continue;
         }
         SetDigit(disp_idx, next_digit[disp_idx]);
+        next_digit[disp_idx] += 1;
         ++disp_idx;
         if (disp_idx >= NUM_DISPLAY) {
           disp_idx = 0;
         }
       }
+      ++init_step;
+    } else if (is_init) {
+      int i;
+      for (i = 0; i < NUM_DISPLAY; ++i) {
+        if (ButtonState(i)) {
+          next_digit[i] += 1;
+          if (next_digit[i] > 9) {
+            next_digit[i] = 0;
+          }
+          SetDigit(i, next_digit[i]);
+        }
+      }
+    }
+    // Blink Status LED
+    if (led_blink_count == 0) {
+      SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
+    } else if (led_blink_count == LED_ON_DURATION) {
+      RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
+    } else if (led_blink_count == LED_BLINK_PERIOD) {
+      led_blink_count = 0;
     }
   }
   /* USER CODE END 3 */
