@@ -119,9 +119,12 @@ uint32_t g_tx_data[TX_DATA_MAX_LEN],
 bool g_button_last_state[NUM_BUTTON] = {false},
      g_button_state[NUM_BUTTON] = {false},
      g_button_scan[NUM_BUTTON] = {false};
-/*** The following variables are for the Ncv7719_SetDigit() state machine. ***/
-uint8_t g_ncv_current_digit[NUM_DISPLAY] = {11, 11, 11, 11},
-        g_ncv_next_digit[NUM_DISPLAY] = {10, 10, 10, 10};
+// g_current_digit is used by SetDigit() to know what segments to turn on/off to
+// get to the next digit. On boot we assume that all the segments are not
+// showing by setting g_current_digit to have the index value 11 (hide all
+// segments). The user needs to call SetDigit(x, 10) for all displays on startup
+// to get the displays in a known configuration, where all segments are shown.
+uint8_t g_current_digit[NUM_DISPLAY] = {11, 11, 11, 11};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -303,23 +306,17 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   if (disp_idx >= NUM_DISPLAY) {
     return;
   }
-  const uint8_t curr_digit = g_ncv_current_digit[disp_idx];
   #define DIGIT_CFG_ARRAY_LEN 12
-  // If g_ncv_next_digit[disp_idx] is a valid value, this means we are currently
-  // working on setting that value and will not change to a different value (ie.
-  // a new next_digit) until g_ncv_next_digit[disp_idx] is not a valid value. On
-  // boot up, all displays are initialized to digit 11 (see digit_cfg).
-  if (g_ncv_next_digit[disp_idx] < DIGIT_CFG_ARRAY_LEN) {
-    next_digit = g_ncv_next_digit[disp_idx];
-  } else {
-    if (next_digit < DIGIT_CFG_ARRAY_LEN) {
-      g_ncv_next_digit[disp_idx] = next_digit;
-    } else {
-      return;
-    }
-  }
-  if (curr_digit == next_digit) {
+  if (next_digit >= DIGIT_CFG_ARRAY_LEN) {
     return;
+  }
+  const uint8_t curr_digit = g_current_digit[disp_idx];
+  if (next_digit == curr_digit) {
+    return;
+  } else {
+    // We basically assume that the user would not call SetDigit() so fast that
+    // the following would not be true.
+    g_current_digit[disp_idx] = next_digit;
   }
   #define NUM_SEGMENT 7
   const uint32_t seg_mask[NUM_SEGMENT] =
@@ -396,8 +393,6 @@ void SetDigit(const uint8_t disp_idx, uint8_t next_digit) {
   }
   TxDataPush(0, disp_idx);  // Disable all the outputs 
   TxDataPush(DISABLE_NCV_DRV, disp_idx);
-  g_ncv_current_digit[disp_idx] = next_digit;
-  g_ncv_next_digit[disp_idx] = DIGIT_CFG_ARRAY_LEN;
 }
 
 
@@ -458,11 +453,25 @@ void UpdateButtonState() {
 
 
 bool ButtonState(const uint8_t button_index) {
+  if (button_index >= NUM_BUTTON) {
+    return false;
+  }
   if (g_button_state[button_index]) {
     g_button_state[button_index] = false;
     return true;
   }
   return false;
+}
+
+
+void SetRtcTime(const uint8_t hour,
+                const uint8_t minute,
+                const uint8_t second) {
+  RTC_TimeTypeDef time;
+  time.Hours = hour;
+  time.Minutes = minute;
+  time.Seconds = second;
+  HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BIN);
 }
 
 /* USER CODE END 0 */
@@ -507,6 +516,8 @@ int main(void)
   bool first_tim_call_set_digit = true;
   uint8_t disp_idx = 0,
           next_digit[NUM_DISPLAY] = {0, 0, 0, 0};
+  uint32_t hour = 0,
+           minute = 0;
   // g_tim_transmit_spi frequency is 2000 Hz
   const uint32_t INIT_PERIOD = 125;  // 0.125 second
   bool is_init = false;
@@ -550,7 +561,8 @@ int main(void)
       init_period_count = 0;
       int i;
       if (init_step == 0) {
-        // Show all segments
+        // Show all segments - Calling SetDigit(x, 10) on boot needs to be done
+        // to properly initialize SetDigit() and the displays.
         for (i = 0; i < NUM_DISPLAY; ++i) {
           SetDigit(i, 10);
         }
@@ -567,6 +579,7 @@ int main(void)
             SetDigit(i, next_digit[i]);
           }
           is_init = true;
+          SetRtcTime(0, 0, 0);
           continue;
         }
         SetDigit(disp_idx, next_digit[disp_idx]);
@@ -578,6 +591,8 @@ int main(void)
       }
       ++init_step;
     } else if (is_init) {
+// #define BUTTON_TEST
+#ifdef BUTTON_TEST
       int i;
       for (i = 0; i < NUM_DISPLAY; ++i) {
         if (ButtonState(i)) {
@@ -588,6 +603,52 @@ int main(void)
           SetDigit(i, next_digit[i]);
         }
       }
+#else
+      bool update_rtc_time = false;
+      if (ButtonState(0)) {
+        if (hour >= 23) {
+          hour = 0;
+        } else {
+          ++hour;
+        }
+        update_rtc_time = true;
+      } else if (ButtonState(1)) {
+        if (hour == 0) {
+          hour = 23;
+        } else {
+          --hour;
+        }
+        update_rtc_time = true;
+      }
+      if (ButtonState(2)) {
+        if (minute >= 59) {
+          minute = 0;
+        } else {
+          ++minute;
+        }
+        update_rtc_time = true;
+      } else if (ButtonState(3)) {
+        if (minute == 0) {
+          minute = 59;
+        } else {
+          --minute;
+        }
+        update_rtc_time = true;
+      }
+      if (update_rtc_time) {
+        SetRtcTime(hour, minute, 0);
+      }
+      RTC_DateTypeDef rtc_date;
+      RTC_TimeTypeDef rtc_time;
+      HAL_RTC_GetTime(&hrtc, &rtc_time, RTC_FORMAT_BIN);
+      HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
+      hour = rtc_time.Hours;
+      minute = rtc_time.Minutes;
+      SetDigit(0, rtc_time.Hours / 10 % 10);
+      SetDigit(1, rtc_time.Hours % 10);
+      SetDigit(2, rtc_time.Minutes /  10 % 10);
+      SetDigit(3, rtc_time.Minutes % 10);
+#endif
     }
     // Blink Status LED
     if (led_blink_count == 0) {
