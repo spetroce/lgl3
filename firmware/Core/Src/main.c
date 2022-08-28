@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -22,7 +21,6 @@
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -256,18 +254,15 @@ void SpiTransmit32() {
   // Send first word over SPI (bits 0-15 of tx_data; NCV7719_HBSEL = 0)
   RESET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
   LL_SPI_TransmitData16(SPI1, tx_data_word[0]);
-  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
+  RESET_GPIO(GPIOA, LL_GPIO_PIN_7)  // TODO: Is this necessary?
   // Wait for transmit to complete
   while (SPI1->SR & SPI_SR_BSY);  // See LL_SPI_IsActiveFlag_BSY()
   SET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
-  // Need minimum 5 microsecond wait here between CSB toggle. This empty loop
-  // with 30 iterations makes a ~5.5 microsecond delay.
-  int i;
-  for (i = 0; i < 30; ++i) { }
+  DelayUs(5);  // Need minimum 5 microsecond wait here between CSB toggle.
   // Send second word over SPI (bits 16-31 of tx_data; NCV7719_HBSEL = 1)
   RESET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
   LL_SPI_TransmitData16(SPI1, tx_data_word[1]);
-  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
+  RESET_GPIO(GPIOA, LL_GPIO_PIN_7)  // TODO: Is this necessary?
   // Wait for SPI transmit to complete
   while (SPI1->SR & SPI_SR_BSY);
   SET_GPIO(spi_cs_gpio_port[disp_idx], spi_cs_gpio_pin[disp_idx])
@@ -471,7 +466,18 @@ void SetRtcTime(const uint8_t hour,
   time.Hours = hour;
   time.Minutes = minute;
   time.Seconds = second;
-  HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BIN);
+  time.SubSeconds = 0;
+  time.TimeFormat = RTC_HOURFORMAT_24;
+  time.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+  time.StoreOperation = RTC_STOREOPERATION_RESET;
+  HAL_RTC_SetTime(&hrtc, &time, FORMAT_BIN);
+  RTC_DateTypeDef date;
+  date.WeekDay = RTC_WEEKDAY_MONDAY;
+  date.Month = RTC_MONTH_JANUARY;
+  date.Date = 1;
+  date.Year = 1;
+  HAL_RTC_SetDate(&hrtc, &date, FORMAT_BCD);
+
 }
 
 /* USER CODE END 0 */
@@ -505,9 +511,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
-  MX_TIM6_Init();
-  MX_USART2_UART_Init();
   MX_RTC_Init();
+  MX_TIM6_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
   if (!LL_SPI_IsEnabled(SPI1)) {
@@ -517,15 +523,15 @@ int main(void)
   uint8_t disp_idx = 0,
           next_digit[NUM_DISPLAY] = {0, 0, 0, 0};
   uint32_t hour = 0,
-           minute = 0;
+           minute = 0,
+           seconds = 0;
   // g_tim_transmit_spi frequency is 2000 Hz
   const uint32_t INIT_PERIOD = 125;  // 0.125 second
   bool is_init = false;
   uint32_t init_step = 0,
            init_period_count = 0,
            update_button_count = 0;
-  const uint32_t LED_ON_DURATION = 100,  // 50 ms
-                 LED_BLINK_PERIOD = 2000;  // 1 sec
+  const uint32_t LED_ON_DURATION = 100;  // 50 ms
   uint32_t led_blink_count = 0;
   /* USER CODE END 2 */
 
@@ -534,7 +540,7 @@ int main(void)
   // Send test SPI message (this also makes the clock default state low, which
   // is good for the doing logic analyzer work).
   LL_SPI_TransmitData16(SPI1, 0xBEEF);
-  RESET_GPIO(SPI1_MOSI_GPIO_Port, SPI1_MOSI_Pin)
+  RESET_GPIO(GPIOA, LL_GPIO_PIN_7)  // TODO: Is this necessary?
   HAL_Delay(10);
   while (1)
   {
@@ -644,6 +650,10 @@ int main(void)
       HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
       hour = rtc_time.Hours;
       minute = rtc_time.Minutes;
+      if (seconds != rtc_time.Seconds) {
+        seconds = rtc_time.Seconds;
+        led_blink_count = 0;
+      }
       SetDigit(0, rtc_time.Hours / 10 % 10);
       SetDigit(1, rtc_time.Hours % 10);
       SetDigit(2, rtc_time.Minutes /  10 % 10);
@@ -655,8 +665,6 @@ int main(void)
       SET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
     } else if (led_blink_count == LED_ON_DURATION) {
       RESET_GPIO(LED_GREEN_GPIO_Port, LED_GREEN_Pin)
-    } else if (led_blink_count == LED_BLINK_PERIOD) {
-      led_blink_count = 0;
     }
   }
   /* USER CODE END 3 */
@@ -670,18 +678,25 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.LSEState = RCC_LSE_BYPASS;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
+  RCC_OscInitStruct.PLL.PLLN = 20;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -693,16 +708,10 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }

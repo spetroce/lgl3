@@ -6,3 +6,5 @@ kicad/*/*backups
 kicad/*/fp-info-cache
 kicad/parts/*.bak
 kicad/*/gerber
+kicad/*/fabrication
+*csv#

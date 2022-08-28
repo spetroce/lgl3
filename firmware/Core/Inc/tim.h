@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2021 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -34,6 +34,8 @@ extern "C" {
 
 extern TIM_HandleTypeDef htim6;
 
+extern TIM_HandleTypeDef htim7;
+
 /* USER CODE BEGIN Private defines */
 
 /// Times the Ncv7719_SetDigit() to be called every 500us
@@ -42,9 +44,10 @@ extern volatile bool g_tim_transmit_spi;
 /* USER CODE END Private defines */
 
 void MX_TIM6_Init(void);
+void MX_TIM7_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void DelayUs(uint16_t us);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

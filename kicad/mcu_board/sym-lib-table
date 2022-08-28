@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name "mio")(type "KiCad")(uri "${KIPRJMOD}/../parts/mio.kicad_sym")(options "")(descr ""))
+  (lib (name "ecs")(type "KiCad")(uri "${KIPRJMOD}/../parts/ECS-327TXO-33-TR.kicad_sym")(options "")(descr ""))
+  (lib (name "ldo")(type "KiCad")(uri "${KIPRJMOD}/../parts/LD2985BM33R.kicad_sym")(options "")(descr ""))
+)

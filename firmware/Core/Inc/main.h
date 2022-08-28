@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -28,19 +27,19 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f3xx_hal.h"
+#include "stm32g4xx_hal.h"
 
-#include "stm32f3xx_ll_spi.h"
-#include "stm32f3xx_ll_bus.h"
-#include "stm32f3xx_ll_cortex.h"
-#include "stm32f3xx_ll_rcc.h"
-#include "stm32f3xx_ll_system.h"
-#include "stm32f3xx_ll_utils.h"
-#include "stm32f3xx_ll_pwr.h"
-#include "stm32f3xx_ll_gpio.h"
-#include "stm32f3xx_ll_dma.h"
+#include "stm32g4xx_ll_spi.h"
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_cortex.h"
+#include "stm32g4xx_ll_rcc.h"
+#include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_utils.h"
+#include "stm32g4xx_ll_pwr.h"
+#include "stm32g4xx_ll_gpio.h"
+#include "stm32g4xx_ll_dma.h"
 
-#include "stm32f3xx_ll_exti.h"
+#include "stm32g4xx_ll_exti.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -70,52 +69,36 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MCO_Pin GPIO_PIN_0
-#define MCO_GPIO_Port GPIOF
-#define HW_ADDR_1_Pin GPIO_PIN_1
-#define HW_ADDR_1_GPIO_Port GPIOF
-#define SPI1_CS_4_Pin GPIO_PIN_0
-#define SPI1_CS_4_GPIO_Port GPIOA
-#define SPI1_CS_3_Pin GPIO_PIN_1
-#define SPI1_CS_3_GPIO_Port GPIOA
-#define VCP_TX_Pin GPIO_PIN_2
-#define VCP_TX_GPIO_Port GPIOA
-#define SPI1_CS_2_Pin GPIO_PIN_3
-#define SPI1_CS_2_GPIO_Port GPIOA
-#define SPI1_CS_1_Pin GPIO_PIN_4
-#define SPI1_CS_1_GPIO_Port GPIOA
-#define SPI1_SCK_Pin GPIO_PIN_5
-#define SPI1_SCK_GPIO_Port GPIOA
-#define SPI1_MISO_Pin GPIO_PIN_6
-#define SPI1_MISO_GPIO_Port GPIOA
-#define SPI1_MOSI_Pin GPIO_PIN_7
-#define SPI1_MOSI_GPIO_Port GPIOA
-#define MIN_DOWN_Pin GPIO_PIN_0
-#define MIN_DOWN_GPIO_Port GPIOB
-#define HW_ADDR_0_Pin GPIO_PIN_8
-#define HW_ADDR_0_GPIO_Port GPIOA
-#define HOUR_DOWN_Pin GPIO_PIN_9
-#define HOUR_DOWN_GPIO_Port GPIOA
-#define MIN_UP_Pin GPIO_PIN_10
-#define MIN_UP_GPIO_Port GPIOA
-#define NCV_EN_2_Pin GPIO_PIN_11
+#define NCV_EN_4_Pin GPIO_PIN_0
+#define NCV_EN_4_GPIO_Port GPIOA
+#define NCV_EN_3_Pin GPIO_PIN_1
+#define NCV_EN_3_GPIO_Port GPIOA
+#define NCV_EN_2_Pin GPIO_PIN_2
 #define NCV_EN_2_GPIO_Port GPIOA
-#define HOUR_UP_Pin GPIO_PIN_12
-#define HOUR_UP_GPIO_Port GPIOA
-#define SWDIO_Pin GPIO_PIN_13
-#define SWDIO_GPIO_Port GPIOA
-#define SWCLK_Pin GPIO_PIN_14
-#define SWCLK_GPIO_Port GPIOA
-#define VCP_RX_Pin GPIO_PIN_15
-#define VCP_RX_GPIO_Port GPIOA
-#define LED_GREEN_Pin GPIO_PIN_3
-#define LED_GREEN_GPIO_Port GPIOB
-#define NCV_EN_4_Pin GPIO_PIN_4
-#define NCV_EN_4_GPIO_Port GPIOB
-#define NCV_EN_3_Pin GPIO_PIN_5
-#define NCV_EN_3_GPIO_Port GPIOB
-#define NCV_EN_1_Pin GPIO_PIN_7
+#define MIN_UP_Pin GPIO_PIN_3
+#define MIN_UP_GPIO_Port GPIOA
+#define HOUR_DOWN_Pin GPIO_PIN_4
+#define HOUR_DOWN_GPIO_Port GPIOA
+#define HOUR_UP_Pin GPIO_PIN_0
+#define HOUR_UP_GPIO_Port GPIOB
+#define MIN_DOWN_Pin GPIO_PIN_1
+#define MIN_DOWN_GPIO_Port GPIOB
+#define NCV_EN_1_Pin GPIO_PIN_2
 #define NCV_EN_1_GPIO_Port GPIOB
+#define SPI1_CS_1_Pin GPIO_PIN_10
+#define SPI1_CS_1_GPIO_Port GPIOB
+#define SPI1_CS_2_Pin GPIO_PIN_11
+#define SPI1_CS_2_GPIO_Port GPIOB
+#define SPI1_CS_3_Pin GPIO_PIN_12
+#define SPI1_CS_3_GPIO_Port GPIOB
+#define SPI1_CS_4_Pin GPIO_PIN_13
+#define SPI1_CS_4_GPIO_Port GPIOB
+#define LED_GREEN_Pin GPIO_PIN_5
+#define LED_GREEN_GPIO_Port GPIOB
+#define HW_REV_1_Pin GPIO_PIN_7
+#define HW_REV_1_GPIO_Port GPIOB
+#define HW_REV_2_Pin GPIO_PIN_9
+#define HW_REV_2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
