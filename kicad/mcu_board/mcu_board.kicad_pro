@@ -580,7 +580,7 @@
       "netlist": "../../../../../",
       "specctra_dsn": "",
       "step": "../parts/mcu_board.step",
-      "vrml": ""
+      "vrml": "../parts/mcu_board.wrl"
     },
     "page_layout_descr_file": ""
   },
