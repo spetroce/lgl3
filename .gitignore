@@ -8,3 +8,4 @@ kicad/parts/*.bak
 kicad/*/gerber
 kicad/*/fabrication
 *csv#
+kicad/mcu_board/#auto_saved_files#

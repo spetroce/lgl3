@@ -513,8 +513,9 @@ int main(void)
   MX_SPI1_Init();
   MX_RTC_Init();
   MX_TIM6_Init();
-  MX_TIM7_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim2);  // DelayUs() timer
   HAL_TIM_Base_Start_IT(&htim6);  // 2000 Hz interupt
   if (!LL_SPI_IsEnabled(SPI1)) {
     LL_SPI_Enable(SPI1);
