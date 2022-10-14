@@ -2,8 +2,8 @@
 <export version="E">
   <design>
     <source>/home/spetroce/code/src/lgl3/kicad/mcu_board/mcu_board.kicad_sch</source>
-    <date>Sun 02 Oct 2022 11:57:07 PM EDT</date>
-    <tool>Eeschema 6.99.0-1.20221001gitd93c0dd.fc36</tool>
+    <date>Wed 12 Oct 2022 12:28:41 AM EDT</date>
+    <tool>Eeschema 6.99.0-1.20221010git3221877.fc36</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title/>
@@ -70,13 +70,13 @@
       <tstamps>04eca888-aa53-4a6a-9d6b-cd62caa4c467</tstamps>
     </comp>
     <comp ref="C4">
-      <value>1uF</value>
-      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <value>10nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
       <fields>
-        <field name="LCSC Part Number">C107367</field>
+        <field name="LCSC Part Number">C519405</field>
       </fields>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
-      <property name="LCSC Part Number" value="C107367"/>
+      <property name="LCSC Part Number" value="C519405"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="File: mcu_board.kicad_sch"/>
       <property name="ki_description" value="Unpolarized capacitor"/>
@@ -557,8 +557,9 @@
       <node ref="Y1" pin="4" pinfunction="SUPPLY_VOLTAGE" pintype="power_in"/>
     </net>
     <net code="2" name="+5V">
-      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
       <node ref="U2" pin="1" pinfunction="IN" pintype="input"/>
+      <node ref="U2" pin="3" pinfunction="INHIBIT" pintype="bidirectional"/>
     </net>
     <net code="3" name="/BOOT0">
       <node ref="U1" pin="45" pinfunction="PB8-BOOT0" pintype="bidirectional"/>
@@ -643,8 +644,8 @@
     <net code="29" name="GND">
       <node ref="C1" pin="2" pintype="passive"/>
       <node ref="C2" pin="1" pintype="passive"/>
-      <node ref="C3" pin="2" pintype="passive"/>
-      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
       <node ref="C5" pin="1" pintype="passive"/>
       <node ref="C6" pin="2" pintype="passive"/>
       <node ref="C7" pin="1" pintype="passive"/>
@@ -656,7 +657,6 @@
       <node ref="U1" pin="35" pinfunction="VSS" pintype="power_in"/>
       <node ref="U1" pin="47" pinfunction="VSS" pintype="power_in"/>
       <node ref="U2" pin="2" pinfunction="GND" pintype="power_in"/>
-      <node ref="U2" pin="3" pinfunction="INHIBIT" pintype="bidirectional"/>
       <node ref="Y1" pin="2" pinfunction="GND" pintype="power_in"/>
     </net>
     <net code="30" name="Net-(D1-A)">
@@ -674,7 +674,7 @@
       <node ref="U1" pin="32" pinfunction="PA10" pintype="bidirectional"/>
     </net>
     <net code="34" name="Net-(U2-BYPASS)">
-      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
       <node ref="U2" pin="4" pinfunction="BYPASS" pintype="unspecified"/>
     </net>
     <net code="37" name="unconnected-(U1-PA8)">
