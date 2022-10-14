@@ -69,11 +69,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define NCV_EN_4_Pin GPIO_PIN_0
-#define NCV_EN_4_GPIO_Port GPIOA
-#define NCV_EN_3_Pin GPIO_PIN_1
+#define NCV_EN_4_Pin GPIO_PIN_1
+#define NCV_EN_4_GPIO_Port GPIOF
+#define NCV_EN_3_Pin GPIO_PIN_0
 #define NCV_EN_3_GPIO_Port GPIOA
-#define NCV_EN_2_Pin GPIO_PIN_2
+#define NCV_EN_2_Pin GPIO_PIN_1
 #define NCV_EN_2_GPIO_Port GPIOA
 #define MIN_UP_Pin GPIO_PIN_3
 #define MIN_UP_GPIO_Port GPIOA

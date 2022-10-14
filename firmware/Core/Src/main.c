@@ -716,6 +716,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  HAL_RCCEx_EnableLSCO(RCC_LSCOSOURCE_LSE);
 }
 
 /* USER CODE BEGIN 4 */
