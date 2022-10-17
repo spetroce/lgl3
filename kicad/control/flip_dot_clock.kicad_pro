@@ -693,7 +693,7 @@
       "netlist": "flip_dot_clock.net",
       "specctra_dsn": "",
       "step": "../../../../../Downloads/flip_dot_clock.step",
-      "vrml": ""
+      "vrml": "../parts/3d_model/flip_dot_clock.wrl"
     },
     "page_layout_descr_file": ""
   },

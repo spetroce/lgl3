@@ -1,5 +1,6 @@
 {
   "board": {
+    "3dviewports": [],
     "design_settings": {
       "defaults": {
         "board_outline_line_width": 0.09999999999999999,
@@ -62,6 +63,7 @@
       "rule_severities": {
         "annular_width": "error",
         "clearance": "error",
+        "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
         "courtyards_overlap": "error",
@@ -70,6 +72,7 @@
         "drill_out_of_range": "error",
         "duplicate_footprints": "warning",
         "extra_footprint": "warning",
+        "footprint": "error",
         "footprint_type_mismatch": "error",
         "hole_clearance": "error",
         "hole_near_hole": "error",
@@ -112,6 +115,7 @@
         "allow_microvias": false,
         "max_error": 0.005,
         "min_clearance": 0.127,
+        "min_connection": 0.0,
         "min_copper_edge_clearance": 0.381,
         "min_hole_clearance": 0.127,
         "min_hole_to_hole": 0.127,
@@ -406,7 +410,7 @@
   "net_settings": {
     "classes": [
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -420,10 +424,10 @@
         "track_width": 0.4,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       },
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -432,19 +436,15 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Power",
-        "nets": [
-          "+5V",
-          "GND"
-        ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       },
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -453,35 +453,89 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Signal",
-        "nets": [
-          "/HOUR_DOWN",
-          "/HOUR_UP",
-          "/MIN_DOWN",
-          "/MIN_UP",
-          "/NCV_EN_1",
-          "/NCV_EN_2",
-          "/NCV_EN_3",
-          "/NCV_EN_4",
-          "/SPI1_CS_1",
-          "/SPI1_CS_2",
-          "/SPI1_CS_3",
-          "/SPI1_CS_4",
-          "/SPI1_MISO",
-          "/SPI1_MOSI",
-          "/SPI1_SCK"
-        ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.2,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       }
     ],
     "meta": {
-      "version": 2
+      "version": 3
     },
-    "net_colors": null
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "Power",
+        "pattern": "+5V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/HOUR_DOWN"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/HOUR_UP"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/MIN_DOWN"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/MIN_UP"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_1"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_2"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_4"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_1"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_2"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_4"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_MISO"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_MOSI"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_SCK"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {

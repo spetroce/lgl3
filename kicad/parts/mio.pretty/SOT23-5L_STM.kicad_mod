@@ -118,7 +118,7 @@
   (pad "3" smd rect (at 1.1938 -0.950001 180) (size 1.3208 0.5588) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 4109a738-a160-47d0-837f-ab73c9763142))
   (pad "4" smd rect (at -1.1938 -0.950001 180) (size 1.3208 0.5588) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 977a3ca2-897d-4001-8b74-5f5e608b3f00))
   (pad "5" smd rect (at -1.1938 0.950001 180) (size 1.3208 0.5588) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp e314806b-cad7-4061-b7ee-8ce22438fe5c))
-  (model "/home/spetroce/code/src/lgl3/kicad/parts/SOT23-5L_STM.step"
+  (model "${KIPRJMOD}/../parts/3d_model/SOT23-5L_STM.step"
     (offset (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 180))

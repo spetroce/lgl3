@@ -1,5 +1,6 @@
 {
   "board": {
+    "3dviewports": [],
     "design_settings": {
       "defaults": {
         "board_outline_line_width": 0.049999999999999996,
@@ -63,6 +64,7 @@
       "rule_severities": {
         "annular_width": "error",
         "clearance": "error",
+        "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
         "courtyards_overlap": "error",
@@ -71,10 +73,12 @@
         "drill_out_of_range": "error",
         "duplicate_footprints": "warning",
         "extra_footprint": "warning",
+        "footprint": "error",
         "footprint_type_mismatch": "error",
         "hole_clearance": "error",
         "hole_near_hole": "error",
         "invalid_outline": "error",
+        "isolated_copper": "warning",
         "item_on_disabled_layer": "error",
         "items_not_allowed": "error",
         "length_out_of_range": "error",
@@ -89,6 +93,7 @@
         "padstack": "error",
         "pth_inside_courtyard": "ignore",
         "shorting_items": "error",
+        "silk_edge_clearance": "warning",
         "silk_over_copper": "warning",
         "silk_overlap": "warning",
         "skew_out_of_range": "error",
@@ -104,7 +109,6 @@
         "unconnected_items": "error",
         "unresolved_variable": "error",
         "via_dangling": "warning",
-        "zone_has_empty_net": "error",
         "zones_intersect": "error"
       },
       "rule_severitieslegacy_courtyards_overlap": true,
@@ -114,6 +118,7 @@
         "allow_microvias": false,
         "max_error": 0.005,
         "min_clearance": 0.127,
+        "min_connection": 0.0,
         "min_copper_edge_clearance": 0.381,
         "min_hole_clearance": 0.127,
         "min_hole_to_hole": 0.127,
@@ -406,7 +411,7 @@
   "net_settings": {
     "classes": [
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -420,10 +425,10 @@
         "track_width": 0.4,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       },
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -432,70 +437,15 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Power",
-        "nets": [
-          "+24V",
-          "+5V",
-          "/A_SET_1",
-          "/A_SET_2",
-          "/A_SET_3",
-          "/A_SET_4",
-          "/B_SET_1",
-          "/B_SET_2",
-          "/B_SET_3",
-          "/B_SET_4",
-          "/C_SET_1",
-          "/C_SET_2",
-          "/C_SET_3",
-          "/C_SET_4",
-          "/D_SET_1",
-          "/D_SET_2",
-          "/D_SET_3",
-          "/D_SET_4",
-          "/E_SET_1",
-          "/E_SET_2",
-          "/E_SET_3",
-          "/E_SET_4",
-          "/F_SET_1",
-          "/F_SET_2",
-          "/F_SET_3",
-          "/F_SET_4",
-          "/G_SET_1",
-          "/G_SET_2",
-          "/G_SET_3",
-          "/G_SET_4",
-          "/RESET_1",
-          "/RESET_2",
-          "/RESET_3",
-          "/RESET_4",
-          "GND",
-          "Net-(D1-K)",
-          "Net-(D2-K)",
-          "Net-(D3-K)",
-          "Net-(D4-K)",
-          "Net-(DS1-A_RESET)",
-          "Net-(DS1-A_SET)",
-          "Net-(DS1-B_RESET)",
-          "Net-(DS1-B_SET)",
-          "Net-(DS1-C_RESET)",
-          "Net-(DS1-C_SET)",
-          "Net-(DS1-D_RESET)",
-          "Net-(DS1-D_SET)",
-          "Net-(DS1-E_RESET)",
-          "Net-(DS1-E_SET)",
-          "Net-(DS1-F_RESET)",
-          "Net-(DS1-F_SET)",
-          "Net-(DS1-G_RESET)",
-          "Net-(DS1-G_SET)"
-        ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       },
       {
-        "bus_width": 12.0,
+        "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
@@ -504,35 +454,293 @@
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
         "name": "Signal",
-        "nets": [
-          "/HOUR_DOWN",
-          "/HOUR_UP",
-          "/MIN_DOWN",
-          "/MIN_UP",
-          "/NCV_EN_1",
-          "/NCV_EN_2",
-          "/NCV_EN_3",
-          "/NCV_EN_4",
-          "/SPI1_CS_1",
-          "/SPI1_CS_2",
-          "/SPI1_CS_3",
-          "/SPI1_CS_4",
-          "/SPI1_MISO",
-          "/SPI1_MOSI",
-          "/SPI1_SCK"
-        ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.2,
         "via_diameter": 0.6,
         "via_drill": 0.3,
-        "wire_width": 6.0
+        "wire_width": 6
       }
     ],
     "meta": {
-      "version": 2
+      "version": 3
     },
-    "net_colors": null
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": [
+      {
+        "netclass": "Power",
+        "pattern": "+24V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+5V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/A_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/A_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/A_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/A_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/B_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/B_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/B_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/B_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/C_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/C_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/C_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/C_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/D_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/D_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/D_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/D_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/E_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/E_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/E_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/E_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/F_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/F_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/F_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/F_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/G_SET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/G_SET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/G_SET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/G_SET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/RESET_1"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/RESET_2"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/RESET_3"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/RESET_4"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(D1-K)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(D2-K)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(D3-K)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(D4-K)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-A_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-A_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-B_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-B_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-C_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-C_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-D_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-D_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-E_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-E_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-F_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-F_SET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-G_RESET)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "Net-(DS1-G_SET)"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/HOUR_DOWN"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/HOUR_UP"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/MIN_DOWN"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/MIN_UP"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_1"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_2"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/NCV_EN_4"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_1"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_2"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_CS_4"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_MISO"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_MOSI"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/SPI1_SCK"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
