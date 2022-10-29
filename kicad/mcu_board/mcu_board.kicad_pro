@@ -579,7 +579,7 @@
       "idf": "",
       "netlist": "../../../../../",
       "specctra_dsn": "",
-      "step": "../parts/mcu_board.step",
+      "step": "../parts/3d_model/mcu_board.step",
       "vrml": "../parts/mcu_board.wrl"
     },
     "page_layout_descr_file": ""
