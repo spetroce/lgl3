@@ -495,7 +495,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../parts/3d_model/button_board.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
