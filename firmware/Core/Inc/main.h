@@ -75,10 +75,10 @@ void Error_Handler(void);
 #define NCV_EN_3_GPIO_Port GPIOA
 #define NCV_EN_2_Pin GPIO_PIN_2
 #define NCV_EN_2_GPIO_Port GPIOA
-#define MIN_UP_Pin GPIO_PIN_3
-#define MIN_UP_GPIO_Port GPIOA
-#define HOUR_DOWN_Pin GPIO_PIN_4
+#define HOUR_DOWN_Pin GPIO_PIN_3
 #define HOUR_DOWN_GPIO_Port GPIOA
+#define MIN_UP_Pin GPIO_PIN_4
+#define MIN_UP_GPIO_Port GPIOA
 #define HOUR_UP_Pin GPIO_PIN_0
 #define HOUR_UP_GPIO_Port GPIOB
 #define MIN_DOWN_Pin GPIO_PIN_1
