@@ -1,4 +1,4 @@
-(kicad_sch (version 20221004) (generator eeschema)
+(kicad_sch (version 20230121) (generator eeschema)
 
   (uuid 59ec3156-036e-4049-89db-91a9dd07095f)
 
@@ -3479,7 +3479,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U1") (unit 1) (value "NUCLEO-F303K8-HEADER") (footprint "mio:NUCLEO-F303K8-HEADER")
+          (reference "U1") (unit 1)
         )
       )
     )
@@ -3504,7 +3504,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR01") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR01") (unit 1)
         )
       )
     )
@@ -3529,7 +3529,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR06") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR06") (unit 1)
         )
       )
     )
@@ -3568,7 +3568,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U6") (unit 1) (value "Small_7_Seg_FlipDot_Module") (footprint "mio:Small_7_Seg_FlipDot_Module")
+          (reference "U6") (unit 1)
         )
       )
     )
@@ -3607,7 +3607,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U10") (unit 1) (value "Small_7_Seg_FlipDot_Module") (footprint "mio:Small_7_Seg_FlipDot_Module")
+          (reference "U10") (unit 1)
         )
       )
     )
@@ -3632,7 +3632,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR07") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR07") (unit 1)
         )
       )
     )
@@ -3671,7 +3671,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U8") (unit 1) (value "Small_7_Seg_FlipDot_Module") (footprint "mio:Small_7_Seg_FlipDot_Module")
+          (reference "U8") (unit 1)
         )
       )
     )
@@ -3696,7 +3696,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR018") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR018") (unit 1)
         )
       )
     )
@@ -3721,7 +3721,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR016") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR016") (unit 1)
         )
       )
     )
@@ -3770,7 +3770,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U3") (unit 1) (value "NCV7719") (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm")
+          (reference "U3") (unit 1)
         )
       )
     )
@@ -3809,7 +3809,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U4") (unit 1) (value "Small_7_Seg_FlipDot_Module") (footprint "mio:Small_7_Seg_FlipDot_Module")
+          (reference "U4") (unit 1)
         )
       )
     )
@@ -3834,7 +3834,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR012") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR012") (unit 1)
         )
       )
     )
@@ -3859,7 +3859,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR020") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR020") (unit 1)
         )
       )
     )
@@ -3884,7 +3884,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR011") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR011") (unit 1)
         )
       )
     )
@@ -3914,7 +3914,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U2") (unit 1) (value "SLC03B-05") (footprint "mio:SLC03B-05")
+          (reference "U2") (unit 1)
         )
       )
     )
@@ -3939,7 +3939,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR03") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR03") (unit 1)
         )
       )
     )
@@ -3964,7 +3964,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR04") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR04") (unit 1)
         )
       )
     )
@@ -3989,7 +3989,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR02") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR02") (unit 1)
         )
       )
     )
@@ -4014,7 +4014,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR05") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR05") (unit 1)
         )
       )
     )
@@ -4039,7 +4039,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR019") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR019") (unit 1)
         )
       )
     )
@@ -4065,7 +4065,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "D1") (unit 1) (value "MRA4003T3G") (footprint "Diode_SMD:D_SMA")
+          (reference "D1") (unit 1)
         )
       )
     )
@@ -4090,7 +4090,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0101") (unit 1)
         )
       )
     )
@@ -4116,7 +4116,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C1") (unit 1) (value "150uF") (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm")
+          (reference "C1") (unit 1)
         )
       )
     )
@@ -4142,7 +4142,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C2") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C2") (unit 1)
         )
       )
     )
@@ -4168,7 +4168,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C3") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C3") (unit 1)
         )
       )
     )
@@ -4194,7 +4194,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C4") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C4") (unit 1)
         )
       )
     )
@@ -4219,7 +4219,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0102") (unit 1)
         )
       )
     )
@@ -4243,7 +4243,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H6") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H6") (unit 1)
         )
       )
     )
@@ -4268,7 +4268,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0140") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0140") (unit 1)
         )
       )
     )
@@ -4293,7 +4293,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0103") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0103") (unit 1)
         )
       )
     )
@@ -4337,7 +4337,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "J2") (unit 1) (value "Conn_02x08_Odd_Even") (footprint "Connector_PinSocket_2.54mm:PinSocket_2x10_P2.54mm_Vertical")
+          (reference "J2") (unit 1)
         )
       )
     )
@@ -4362,7 +4362,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0129") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0129") (unit 1)
         )
       )
     )
@@ -4387,7 +4387,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0117") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0117") (unit 1)
         )
       )
     )
@@ -4412,7 +4412,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0107") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0107") (unit 1)
         )
       )
     )
@@ -4438,7 +4438,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C8") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C8") (unit 1)
         )
       )
     )
@@ -4464,7 +4464,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C6") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C6") (unit 1)
         )
       )
     )
@@ -4490,7 +4490,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C12") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C12") (unit 1)
         )
       )
     )
@@ -4515,7 +4515,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0131") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0131") (unit 1)
         )
       )
     )
@@ -4544,7 +4544,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "J3") (unit 1) (value "Conn_01x05_Male") (footprint "Connector_Molex:Molex_Nano-Fit_105309-xx05_1x05_P2.50mm_Vertical")
+          (reference "J3") (unit 1)
         )
       )
     )
@@ -4569,7 +4569,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0133") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0133") (unit 1)
         )
       )
     )
@@ -4594,7 +4594,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0108") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0108") (unit 1)
         )
       )
     )
@@ -4619,7 +4619,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0111") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0111") (unit 1)
         )
       )
     )
@@ -4643,7 +4643,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H4") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H4") (unit 1)
         )
       )
     )
@@ -4668,7 +4668,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0126") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0126") (unit 1)
         )
       )
     )
@@ -4694,7 +4694,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "D4") (unit 1) (value "MRA4003T3G") (footprint "Diode_SMD:D_SMA")
+          (reference "D4") (unit 1)
         )
       )
     )
@@ -4719,7 +4719,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0104") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0104") (unit 1)
         )
       )
     )
@@ -4744,7 +4744,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0121") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0121") (unit 1)
         )
       )
     )
@@ -4769,7 +4769,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0132") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR0132") (unit 1)
         )
       )
     )
@@ -4794,7 +4794,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0118") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0118") (unit 1)
         )
       )
     )
@@ -4818,7 +4818,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H3") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H3") (unit 1)
         )
       )
     )
@@ -4867,7 +4867,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U5") (unit 1) (value "NCV7719") (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm")
+          (reference "U5") (unit 1)
         )
       )
     )
@@ -4892,7 +4892,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0120") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR0120") (unit 1)
         )
       )
     )
@@ -4917,7 +4917,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0142") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0142") (unit 1)
         )
       )
     )
@@ -4942,7 +4942,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0116") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0116") (unit 1)
         )
       )
     )
@@ -4967,7 +4967,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0125") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0125") (unit 1)
         )
       )
     )
@@ -4993,7 +4993,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C13") (unit 1) (value "150uF") (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm")
+          (reference "C13") (unit 1)
         )
       )
     )
@@ -5019,7 +5019,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C15") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C15") (unit 1)
         )
       )
     )
@@ -5044,7 +5044,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0110") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0110") (unit 1)
         )
       )
     )
@@ -5069,7 +5069,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0138") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0138") (unit 1)
         )
       )
     )
@@ -5094,7 +5094,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0128") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0128") (unit 1)
         )
       )
     )
@@ -5143,7 +5143,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U9") (unit 1) (value "NCV7719") (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm")
+          (reference "U9") (unit 1)
         )
       )
     )
@@ -5168,7 +5168,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0106") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0106") (unit 1)
         )
       )
     )
@@ -5192,7 +5192,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H1") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H1") (unit 1)
         )
       )
     )
@@ -5241,7 +5241,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "U7") (unit 1) (value "NCV7719") (footprint "mio:SSOP-24_6.4x7.55mm_P0.65mm")
+          (reference "U7") (unit 1)
         )
       )
     )
@@ -5267,7 +5267,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C5") (unit 1) (value "150uF") (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm")
+          (reference "C5") (unit 1)
         )
       )
     )
@@ -5293,7 +5293,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C7") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C7") (unit 1)
         )
       )
     )
@@ -5319,7 +5319,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "JP2") (unit 1) (value "SJ2O") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP2") (unit 1)
         )
       )
     )
@@ -5344,7 +5344,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0139") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0139") (unit 1)
         )
       )
     )
@@ -5369,7 +5369,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0137") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0137") (unit 1)
         )
       )
     )
@@ -5394,7 +5394,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0115") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0115") (unit 1)
         )
       )
     )
@@ -5419,7 +5419,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0135") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0135") (unit 1)
         )
       )
     )
@@ -5444,7 +5444,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0134") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0134") (unit 1)
         )
       )
     )
@@ -5469,7 +5469,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0123") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0123") (unit 1)
         )
       )
     )
@@ -5494,7 +5494,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0109") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0109") (unit 1)
         )
       )
     )
@@ -5520,7 +5520,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C9") (unit 1) (value "150uF") (footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm")
+          (reference "C9") (unit 1)
         )
       )
     )
@@ -5544,7 +5544,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H5") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H5") (unit 1)
         )
       )
     )
@@ -5570,7 +5570,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C14") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C14") (unit 1)
         )
       )
     )
@@ -5595,7 +5595,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0114") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0114") (unit 1)
         )
       )
     )
@@ -5621,7 +5621,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C17") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C17") (unit 1)
         )
       )
     )
@@ -5646,7 +5646,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0124") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0124") (unit 1)
         )
       )
     )
@@ -5672,7 +5672,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "D3") (unit 1) (value "MRA4003T3G") (footprint "Diode_SMD:D_SMA")
+          (reference "D3") (unit 1)
         )
       )
     )
@@ -5697,7 +5697,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0105") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR0105") (unit 1)
         )
       )
     )
@@ -5722,7 +5722,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0141") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0141") (unit 1)
         )
       )
     )
@@ -5748,7 +5748,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C11") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C11") (unit 1)
         )
       )
     )
@@ -5774,7 +5774,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "J1") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_Molex:Molex_Micro-Fit_3.0_43650-0215_1x02_P3.00mm_Vertical")
+          (reference "J1") (unit 1)
         )
       )
     )
@@ -5799,7 +5799,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0119") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0119") (unit 1)
         )
       )
     )
@@ -5825,7 +5825,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "JP1") (unit 1) (value "SJ2O") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP1") (unit 1)
         )
       )
     )
@@ -5850,7 +5850,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0122") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0122") (unit 1)
         )
       )
     )
@@ -5876,7 +5876,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C10") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C10") (unit 1)
         )
       )
     )
@@ -5900,7 +5900,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "H2") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H2") (unit 1)
         )
       )
     )
@@ -5925,7 +5925,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0136") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0136") (unit 1)
         )
       )
     )
@@ -5950,7 +5950,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0127") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0127") (unit 1)
         )
       )
     )
@@ -5976,7 +5976,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "D2") (unit 1) (value "MRA4003T3G") (footprint "Diode_SMD:D_SMA")
+          (reference "D2") (unit 1)
         )
       )
     )
@@ -6001,7 +6001,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0130") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0130") (unit 1)
         )
       )
     )
@@ -6026,7 +6026,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0113") (unit 1) (value "+24V") (footprint "")
+          (reference "#PWR0113") (unit 1)
         )
       )
     )
@@ -6052,7 +6052,7 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "C16") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C16") (unit 1)
         )
       )
     )
@@ -6077,13 +6077,13 @@
     (instances
       (project "flip_dot_clock"
         (path "/59ec3156-036e-4049-89db-91a9dd07095f"
-          (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0112") (unit 1)
         )
       )
     )
   )
 
   (sheet_instances
-    (path "/59ec3156-036e-4049-89db-91a9dd07095f" (page "1"))
+    (path "/" (page "1"))
   )
 )

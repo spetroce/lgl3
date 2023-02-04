@@ -1,4 +1,4 @@
-(kicad_sch (version 20221004) (generator eeschema)
+(kicad_sch (version 20230121) (generator eeschema)
 
   (uuid e63e39d7-6ac0-4ffd-8aa3-1841a4541b55)
 
@@ -1066,7 +1066,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "SW4") (unit 1) (value "apem-3eth9-15.0") (footprint "mio:3ETH9-15.0")
+          (reference "SW4") (unit 1)
         )
       )
     )
@@ -1090,7 +1090,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "H1") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H1") (unit 1)
         )
       )
     )
@@ -1118,7 +1118,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "SW2") (unit 1) (value "apem-3eth9-15.0") (footprint "mio:3ETH9-15.0")
+          (reference "SW2") (unit 1)
         )
       )
     )
@@ -1142,7 +1142,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "H3") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H3") (unit 1)
         )
       )
     )
@@ -1167,7 +1167,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR?") (unit 1)
         )
       )
     )
@@ -1191,7 +1191,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "H2") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H2") (unit 1)
         )
       )
     )
@@ -1219,7 +1219,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "SW1") (unit 1) (value "apem-3eth9-15.0") (footprint "mio:3ETH9-15.0")
+          (reference "SW1") (unit 1)
         )
       )
     )
@@ -1247,7 +1247,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "SW3") (unit 1) (value "apem-3eth9-15.0") (footprint "mio:3ETH9-15.0")
+          (reference "SW3") (unit 1)
         )
       )
     )
@@ -1272,7 +1272,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR?") (unit 1)
         )
       )
     )
@@ -1301,7 +1301,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "J1") (unit 1) (value "Conn_01x05_Male") (footprint "Connector_Molex:Molex_Nano-Fit_105309-xx05_1x05_P2.50mm_Vertical")
+          (reference "J1") (unit 1)
         )
       )
     )
@@ -1326,7 +1326,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0101") (unit 1)
         )
       )
     )
@@ -1351,7 +1351,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0102") (unit 1)
         )
       )
     )
@@ -1375,7 +1375,7 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "H4") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H4") (unit 1)
         )
       )
     )
@@ -1400,13 +1400,13 @@
     (instances
       (project "button_board"
         (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-          (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR?") (unit 1)
         )
       )
     )
   )
 
   (sheet_instances
-    (path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55" (page "1"))
+    (path "/" (page "1"))
   )
 )

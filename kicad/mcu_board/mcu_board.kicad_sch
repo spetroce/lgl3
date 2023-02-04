@@ -1,4 +1,4 @@
-(kicad_sch (version 20221004) (generator eeschema)
+(kicad_sch (version 20230121) (generator eeschema)
 
   (uuid 2faae2bb-a0c2-4054-ae9f-2d25525a48e8)
 
@@ -2044,7 +2044,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C3") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0805_2012Metric")
+          (reference "C3") (unit 1)
         )
       )
     )
@@ -2073,7 +2073,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C7") (unit 1) (value "100nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+          (reference "C7") (unit 1)
         )
       )
     )
@@ -2097,7 +2097,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "H2") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H2") (unit 1)
         )
       )
     )
@@ -2122,7 +2122,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0103") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0103") (unit 1)
         )
       )
     )
@@ -2197,7 +2197,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "U1") (unit 1) (value "STM32G431CBTx") (footprint "Package_QFP:LQFP-48_7x7mm_P0.5mm")
+          (reference "U1") (unit 1)
         )
       )
     )
@@ -2241,7 +2241,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "J1") (unit 1) (value "Conn_02x08_Odd_Even") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Vertical")
+          (reference "J1") (unit 1)
         )
       )
     )
@@ -2266,7 +2266,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0107") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0107") (unit 1)
         )
       )
     )
@@ -2291,7 +2291,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0121") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0121") (unit 1)
         )
       )
     )
@@ -2317,7 +2317,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP3") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP3") (unit 1)
         )
       )
     )
@@ -2342,7 +2342,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0115") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0115") (unit 1)
         )
       )
     )
@@ -2367,7 +2367,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0111") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0111") (unit 1)
         )
       )
     )
@@ -2399,7 +2399,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "U2") (unit 1) (value "LD2985BM33R") (footprint "mio:SOT23-5L_STM")
+          (reference "U2") (unit 1)
         )
       )
     )
@@ -2424,7 +2424,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0119") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0119") (unit 1)
         )
       )
     )
@@ -2449,7 +2449,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0118") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0118") (unit 1)
         )
       )
     )
@@ -2474,7 +2474,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "TP2") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_D1.0mm")
+          (reference "TP2") (unit 1)
         )
       )
     )
@@ -2503,7 +2503,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "R1") (unit 1) (value "200") (footprint "Resistor_SMD:R_0603_1608Metric")
+          (reference "R1") (unit 1)
         )
       )
     )
@@ -2528,7 +2528,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0122") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0122") (unit 1)
         )
       )
     )
@@ -2557,7 +2557,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C8") (unit 1) (value "100nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+          (reference "C8") (unit 1)
         )
       )
     )
@@ -2582,7 +2582,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0102") (unit 1)
         )
       )
     )
@@ -2607,7 +2607,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0101") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0101") (unit 1)
         )
       )
     )
@@ -2632,7 +2632,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0114") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0114") (unit 1)
         )
       )
     )
@@ -2663,7 +2663,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "Y1") (unit 1) (value "ECS-327TXO-33-TR") (footprint "mio:ECS-327TXO-33-TR")
+          (reference "Y1") (unit 1)
         )
       )
     )
@@ -2688,7 +2688,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0108") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0108") (unit 1)
         )
       )
     )
@@ -2713,7 +2713,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0112") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0112") (unit 1)
         )
       )
     )
@@ -2739,7 +2739,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP1") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP1") (unit 1)
         )
       )
     )
@@ -2768,7 +2768,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C5") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0805_2012Metric")
+          (reference "C5") (unit 1)
         )
       )
     )
@@ -2792,7 +2792,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "H1") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H1") (unit 1)
         )
       )
     )
@@ -2818,7 +2818,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP2") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP2") (unit 1)
         )
       )
     )
@@ -2843,7 +2843,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0106") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0106") (unit 1)
         )
       )
     )
@@ -2872,7 +2872,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C1") (unit 1) (value "10uF") (footprint "Capacitor_SMD:C_0805_2012Metric")
+          (reference "C1") (unit 1)
         )
       )
     )
@@ -2901,7 +2901,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "R2") (unit 1) (value "200") (footprint "Resistor_SMD:R_0603_1608Metric")
+          (reference "R2") (unit 1)
         )
       )
     )
@@ -2930,7 +2930,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C6") (unit 1) (value "100nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+          (reference "C6") (unit 1)
         )
       )
     )
@@ -2964,7 +2964,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "J2") (unit 1) (value "Conn_02x05_Odd_Even") (footprint "Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical")
+          (reference "J2") (unit 1)
         )
       )
     )
@@ -2989,7 +2989,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0105") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0105") (unit 1)
         )
       )
     )
@@ -3018,7 +3018,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C2") (unit 1) (value "1uF") (footprint "Capacitor_SMD:C_0805_2012Metric")
+          (reference "C2") (unit 1)
         )
       )
     )
@@ -3043,7 +3043,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0109") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0109") (unit 1)
         )
       )
     )
@@ -3072,7 +3072,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "D2") (unit 1) (value "LED") (footprint "LED_SMD:LED_0603_1608Metric")
+          (reference "D2") (unit 1)
         )
       )
     )
@@ -3097,7 +3097,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0116") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0116") (unit 1)
         )
       )
     )
@@ -3122,7 +3122,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0110") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0110") (unit 1)
         )
       )
     )
@@ -3147,7 +3147,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0123") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0123") (unit 1)
         )
       )
     )
@@ -3176,7 +3176,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0603_1608Metric")
+          (reference "D1") (unit 1)
         )
       )
     )
@@ -3202,7 +3202,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP4") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP4") (unit 1)
         )
       )
     )
@@ -3227,7 +3227,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0117") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0117") (unit 1)
         )
       )
     )
@@ -3252,7 +3252,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0113") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0113") (unit 1)
         )
       )
     )
@@ -3277,7 +3277,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0120") (unit 1) (value "+3V3") (footprint "")
+          (reference "#PWR0120") (unit 1)
         )
       )
     )
@@ -3302,7 +3302,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0104") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0104") (unit 1)
         )
       )
     )
@@ -3327,7 +3327,7 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "TP1") (unit 1) (value "TestPoint") (footprint "TestPoint:TestPoint_Pad_D1.0mm")
+          (reference "TP1") (unit 1)
         )
       )
     )
@@ -3356,13 +3356,13 @@
     (instances
       (project "mcu_board"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C4") (unit 1) (value "10nF") (footprint "Capacitor_SMD:C_0603_1608Metric")
+          (reference "C4") (unit 1)
         )
       )
     )
   )
 
   (sheet_instances
-    (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8" (page "1"))
+    (path "/" (page "1"))
   )
 )

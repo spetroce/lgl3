@@ -1,4 +1,4 @@
-(kicad_sch (version 20221004) (generator eeschema)
+(kicad_sch (version 20230121) (generator eeschema)
 
   (uuid 2faae2bb-a0c2-4054-ae9f-2d25525a48e8)
 
@@ -1014,7 +1014,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "H2") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H2") (unit 1)
         )
       )
     )
@@ -1039,7 +1039,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0106") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0106") (unit 1)
         )
       )
     )
@@ -1064,7 +1064,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0101") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0101") (unit 1)
         )
       )
     )
@@ -1089,7 +1089,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0102") (unit 1)
         )
       )
     )
@@ -1143,7 +1143,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "U1") (unit 1) (value "NUCLEO-F303K8-HEADER") (footprint "mio:NUCLEO-F303K8-HEADER")
+          (reference "U1") (unit 1)
         )
       )
     )
@@ -1168,7 +1168,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0105") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0105") (unit 1)
         )
       )
     )
@@ -1194,7 +1194,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP1") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP1") (unit 1)
         )
       )
     )
@@ -1219,7 +1219,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0107") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0107") (unit 1)
         )
       )
     )
@@ -1243,7 +1243,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "H1") (unit 1) (value "MountingHole") (footprint "mio:MountingHole_3.2mm_M3")
+          (reference "H1") (unit 1)
         )
       )
     )
@@ -1269,7 +1269,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "JP2") (unit 1) (value "SolderJumper_2_Open") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+          (reference "JP2") (unit 1)
         )
       )
     )
@@ -1295,7 +1295,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "C1") (unit 1) (value "C") (footprint "Capacitor_SMD:C_1206_3216Metric")
+          (reference "C1") (unit 1)
         )
       )
     )
@@ -1339,7 +1339,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "J1") (unit 1) (value "Conn_02x08_Odd_Even") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x10_P2.54mm_Vertical")
+          (reference "J1") (unit 1)
         )
       )
     )
@@ -1364,7 +1364,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0103") (unit 1) (value "+5V") (footprint "")
+          (reference "#PWR0103") (unit 1)
         )
       )
     )
@@ -1389,7 +1389,7 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0104") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0104") (unit 1)
         )
       )
     )
@@ -1414,13 +1414,13 @@
     (instances
       (project "nucleo_interposer"
         (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8"
-          (reference "#PWR0108") (unit 1) (value "GND") (footprint "")
+          (reference "#PWR0108") (unit 1)
         )
       )
     )
   )
 
   (sheet_instances
-    (path "/2faae2bb-a0c2-4054-ae9f-2d25525a48e8" (page "1"))
+    (path "/" (page "1"))
   )
 )
